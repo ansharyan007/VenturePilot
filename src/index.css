@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { @apply border-slate-200; }
+  html { @apply scroll-smooth; }
+  body { @apply bg-canvas text-ink antialiased; }
+  h1, h2, h3, h4 { @apply font-display tracking-tight; }
+  button, a, input, textarea, select { @apply transition-colors duration-150; }
+  ::selection { @apply bg-brand-100 text-brand-900; }
+}
+
+@layer components {
+  .card { @apply rounded-2xl border border-slate-200/80 bg-white shadow-card; }
+  .input { @apply w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10; }
+  .label { @apply mb-1.5 block text-sm font-medium text-slate-700; }
+  .btn-primary { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-60; }
+  .btn-secondary { @apply inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 disabled:opacity-60; }
+  .eyebrow { @apply text-xs font-semibold uppercase tracking-[0.14em] text-brand-700; }
+}
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; }
+  .print-card { border: none !important; box-shadow: none !important; }
+}

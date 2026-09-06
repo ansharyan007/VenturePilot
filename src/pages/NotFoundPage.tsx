@@ -1,0 +1,2 @@
+import { Link } from 'react-router-dom'
+export function NotFoundPage(){return <div className="flex min-h-screen flex-col items-center justify-center p-6 text-center"><p className="eyebrow">404</p><h1 className="mt-3 text-3xl font-semibold">That page is off the roadmap.</h1><p className="mt-2 text-sm text-slate-500">Return to your founder workspace and keep building.</p><Link to="/dashboard" className="btn-primary mt-6">Go to dashboard</Link></div>}

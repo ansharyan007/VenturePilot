@@ -1,0 +1,32 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedInAs(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
+    match /users/{userId} {
+      allow create: if signedInAs(userId) && request.resource.data.id == userId;
+      allow read, update, delete: if signedInAs(userId);
+
+      match /startups/{startupId} {
+        allow create: if signedInAs(userId)
+          && request.resource.data.ownerId == userId;
+        allow read, delete: if signedInAs(userId)
+          && resource.data.ownerId == userId;
+        allow update: if signedInAs(userId)
+          && resource.data.ownerId == userId
+          && request.resource.data.ownerId == userId;
+
+        match /{subcollection}/{documentId} {
+          allow read, write: if signedInAs(userId);
+        }
+      }
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
