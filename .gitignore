@@ -6,3 +6,6 @@ dist
 *.tsbuildinfo
 vite.config.*.mjs
 .firebase
+server/.env
+server/data/
+server/.runtime/

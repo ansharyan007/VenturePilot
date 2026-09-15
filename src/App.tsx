@@ -11,6 +11,7 @@ const RegisterPage = lazy(() => import('./pages/AuthPages').then((module) => ({ 
 const DashboardPage = lazy(() => import('./pages/DashboardPage').then((module) => ({ default: module.DashboardPage })))
 const CreateStartupPage = lazy(() => import('./pages/CreateStartupPage').then((module) => ({ default: module.CreateStartupPage })))
 const OverviewPage = lazy(() => import('./pages/OverviewPage').then((module) => ({ default: module.OverviewPage })))
+const VisualPlanPage = lazy(() => import('./pages/VisualPlanPage').then((module) => ({ default: module.VisualPlanPage })))
 const IdentityPage = lazy(() => import('./pages/IdentityPage').then((module) => ({ default: module.IdentityPage })))
 const ProductPage = lazy(() => import('./pages/ProductPage').then((module) => ({ default: module.ProductPage })))
 const BOMPage = lazy(() => import('./pages/BOMPage').then((module) => ({ default: module.BOMPage })))
@@ -46,6 +47,7 @@ export default function App() {
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/startup/new" element={<CreateStartupPage />} />
             <Route path="/startup/:startupId" element={<OverviewPage />} />
+            <Route path="/startup/:startupId/visual-plan" element={<VisualPlanPage />} />
             <Route path="/startup/:startupId/identity" element={<IdentityPage />} />
             <Route path="/startup/:startupId/product" element={<ProductPage />} />
             <Route path="/startup/:startupId/bom" element={<BOMPage />} />

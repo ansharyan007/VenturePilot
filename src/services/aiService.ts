@@ -1,4 +1,6 @@
 import type { Startup, IdeaAnalysis, Identity, ProductPlan, BOMItem, Risk, Milestone } from '../types'
+import { complianceChecklistFromKnowledge, runComplianceAgent, runPlanningModel } from './agentService'
+import { isComplianceQuery } from './ragService'
 
 export interface AIService {
   analyzeIdea(startup: Startup): Promise<IdeaAnalysis>
@@ -26,11 +28,22 @@ export class MockAIService implements AIService {
   async generateManufacturingPlan(startup: Startup) { await wait(); return startup.manufacturing }
   async generateSupplyChain(startup: Startup) { await wait(); return startup.supplyChain }
   async generateDistributionPlan(startup: Startup) { await wait(); return startup.distribution }
-  async generateComplianceChecklist(startup: Startup) { await wait(); return startup.compliance }
+  async generateComplianceChecklist(startup: Startup) {
+    return complianceChecklistFromKnowledge(startup)
+  }
   async generateFinancialAssumptions(startup: Startup) { await wait(); return startup.financials }
   async generateRiskAnalysis(startup: Startup) { await wait(); return startup.risks }
   async generateRoadmap(startup: Startup) { await wait(); return startup.roadmap }
   async updateStartupFromConversation(startup: Startup, message: string) {
+    if (isComplianceQuery(message)) {
+      return { reply: await runComplianceAgent(startup, message) }
+    }
+
+    // A configured server gateway receives only the top retrieved chunks. Without
+    // one, the deterministic local planner below keeps development usable.
+    const groundedReply = await runPlanningModel(startup, message)
+    if (groundedReply) return { reply: groundedReply }
+
     await wait()
     const priceMatch = message.match(/(?:₹|rs\.?|inr)?\s*([\d,]{4,})/i)
     if (/selling price|price to/i.test(message) && priceMatch) {

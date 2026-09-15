@@ -6,6 +6,7 @@ import { logout } from '../../services/authService'
 import clsx from 'clsx'
 
 const startupItems = [
+  ['Visual Plan', '/visual-plan', Route],
   ['Overview', '', Gauge], ['Identity', '/identity', Fingerprint], ['Product', '/product', PackageSearch], ['BOM', '/bom', Blocks], ['Manufacturing', '/manufacturing', Factory], ['Supply Chain', '/supply-chain', Route], ['Distribution', '/distribution', Map], ['Compliance', '/compliance', ClipboardCheck], ['Finance', '/finance', Calculator], ['Team', '/team', Users], ['Risks', '/risks', ShieldAlert], ['Scaling', '/scaling', Scaling], ['Roadmap', '/roadmap', BarChart3],
 ] as const
 

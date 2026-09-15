@@ -16,13 +16,31 @@ export interface BOMItem { id: string; component: string; quantity: number; unit
 export interface ManufacturingPlan { strategy: 'Contract manufacturing' | 'Own manufacturing' | 'Hybrid manufacturing'; advantages: string; disadvantages: string; complexity: string; capitalRequirements: number; workforce: string; qualityControl: string; risks: string; factorySize: number; productionLines: number; unitsPerHour: number; hoursPerDay: number; daysPerMonth: number; utilization: number }
 export interface FlowStage { id: string; name: string; purpose: string; requirements: string; dependencies: string; risks: string; notes: string }
 export interface DistributionPlan { model: string; stages: FlowStage[] }
-export interface ComplianceItem { id: string; name: string; status: 'Not started' | 'In progress' | 'Complete' | 'Not applicable'; importance: 'Low' | 'Medium' | 'High'; description: string; nextAction: string }
+export interface ComplianceItem { id: string; name: string; status: 'Not started' | 'In progress' | 'Complete' | 'Not applicable'; importance: 'Low' | 'Medium' | 'High'; description: string; nextAction: string; sourceTitle?: string; sourceUrl?: string; lastVerified?: string; owner?: string; evidenceNote?: string; applicability?: 'Needs review' | 'Applicable' | 'Not applicable' }
 export interface FinancialModel { initialCapital: number; sellingPrice: number; manufacturingCost: number; packaging: number; logistics: number; employeeExpenses: number; rent: number; marketing: number; technology: number; compliance: number; otherExpenses: number; monthlySales: number }
-export interface TeamRole { id: string; role: string; salary: number; hiringStage: string; notes: string }
+export interface TeamRole { id: string; role: string; salary: number; hiringStage: string; notes: string; reportsTo?: string; hiringStatus?: 'Planned' | 'Recruiting' | 'Filled' }
 export interface Risk { id: string; category: string; title: string; probability: number; impact: number; mitigation: string; owner: string; status: 'Open' | 'Mitigating' | 'Resolved' }
 export interface Milestone { id: string; name: string; timing: string; description: string; status: 'Planned' | 'In progress' | 'Complete' }
-export interface ScalingStage { id: string; name: string; productionCapacity: string; team: string; capital: string; distribution: string; technology: string; risks: string; milestones: string }
+export interface ScalingStage { id: string; name: string; productionCapacity: string; team: string; capital: string; distribution: string; technology: string; risks: string; milestones: string; targetUnits?: number; targetBudget?: number; gateStatus?: 'Not reviewed' | 'Needs work' | 'Ready'; evidence?: string }
 export interface ConversationMessage { id: string; role: 'user' | 'assistant'; content: string; createdAt: string }
+
+export interface RagDocument {
+  id: string
+  kind: 'startup' | 'government-compliance'
+  title: string
+  content: string
+  tags: string[]
+  sourceUrl?: string
+  sourcePath?: string
+  lastVerified?: string
+  updatedAt: string
+  contentHash: string
+}
+
+export interface RetrievedContext {
+  document: RagDocument
+  score: number
+}
 
 export interface Startup {
   id: string; ownerId: string; name: string; category: string; customCategory?: string; idea: string; description: string; targetMarket: string; targetCustomer: string; geographicMarket: string; expectedSellingPrice: number; launchTimeline: string; stage: StartupStage; progress: number; isDemo: boolean; createdAt: string; updatedAt: string
