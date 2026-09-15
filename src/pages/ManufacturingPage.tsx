@@ -1,17 +1,39 @@
 import { useState } from 'react'
 import { Check, Factory } from 'lucide-react'
 import { StartupPageState } from '../components/StartupPageState'
-import { Field, Metric, PageHeader, Section, Textarea } from '../components/ui'
+import { Field, PageHeader, Textarea } from '../components/ui'
 import { PageSaveBar } from '../components/PageSaveBar'
+import { ScopeAnchor } from '../components/ScopeAnchor'
+import { ModuleVisual } from '../components/ModuleVisual'
 import type { ManufacturingPlan, Startup, StartupUpdate } from '../types'
-import { calculateCapacity, inr, number } from '../utils/calculations'
 import { useToast } from '../context/ToastContext'
 
-const strategies: ManufacturingPlan['strategy'][]=['Contract manufacturing','Own manufacturing','Hybrid manufacturing']
-function Manufacturing({startup,save}:{startup:Startup;save:(u:StartupUpdate)=>Promise<void>}){
- const [plan,setPlan]=useState(startup.manufacturing);const [saving,setSaving]=useState(false);const {toast}=useToast();const capacity=calculateCapacity(plan)
- const update=<K extends keyof ManufacturingPlan>(key:K,value:ManufacturingPlan[K])=>setPlan(p=>({...p,[key]:value}))
- const doSave=async()=>{setSaving(true);try{await save({manufacturing:plan,progress:Math.max(startup.progress,48)});toast('Manufacturing plan saved')}finally{setSaving(false)}}
- return <><PageHeader eyebrow="Operations" title="Manufacturing Strategy" description="Choose an operating model, then model capacity at a realistic utilization rate."/><div className="grid gap-4 md:grid-cols-3">{strategies.map(strategy=><button key={strategy} onClick={()=>update('strategy',strategy)} className={`card relative p-5 text-left ${plan.strategy===strategy?'border-brand-500 ring-4 ring-brand-500/10':''}`}><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50"><Factory className="h-5 w-5 text-brand-700"/></span><h3 className="mt-4 font-semibold">{strategy}</h3><p className="mt-2 text-xs leading-5 text-slate-500">{strategy==='Contract manufacturing'?'Partner-led production with lower upfront capex.':strategy==='Own manufacturing'?'Maximum control with significant capital and capability needs.':'Own the critical steps while outsourcing scale-intensive work.'}</p>{plan.strategy===strategy&&<span className="absolute right-4 top-4 rounded-full bg-brand-600 p-1 text-white"><Check className="h-3 w-3"/></span>}</button>)}</div><div className="mt-5 grid gap-5 lg:grid-cols-2"><Section title="Strategy detail"><div className="space-y-5"><Textarea label="Advantages" value={plan.advantages} onChange={e=>update('advantages',e.target.value)}/><Textarea label="Disadvantages" value={plan.disadvantages} onChange={e=>update('disadvantages',e.target.value)}/><Field label="Estimated complexity" value={plan.complexity} onChange={e=>update('complexity',e.target.value)}/><Field label="Capital requirements (₹)" type="number" min="0" value={plan.capitalRequirements} onChange={e=>update('capitalRequirements',+e.target.value)}/></div></Section><Section title="Execution controls"><div className="space-y-5"><Textarea label="Workforce" value={plan.workforce} onChange={e=>update('workforce',e.target.value)}/><Textarea label="Quality control" value={plan.qualityControl} onChange={e=>update('qualityControl',e.target.value)}/><Textarea label="Risks" value={plan.risks} onChange={e=>update('risks',e.target.value)}/></div></Section></div><Section className="mt-5" title="Production Planner" description="Capacity is calculated locally from your operating inputs—AI is not used for arithmetic."><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6"><Field label="Factory size (sq ft)" type="number" min="0" value={plan.factorySize} onChange={e=>update('factorySize',+e.target.value)}/><Field label="Production lines" type="number" min="0" value={plan.productionLines} onChange={e=>update('productionLines',+e.target.value)}/><Field label="Units / hour" type="number" min="0" value={plan.unitsPerHour} onChange={e=>update('unitsPerHour',+e.target.value)}/><Field label="Hours / day" type="number" min="0" max="24" value={plan.hoursPerDay} onChange={e=>update('hoursPerDay',+e.target.value)}/><Field label="Days / month" type="number" min="0" max="31" value={plan.daysPerMonth} onChange={e=>update('daysPerMonth',+e.target.value)}/><Field label="Utilization %" type="number" min="0" max="100" value={plan.utilization} onChange={e=>update('utilization',+e.target.value)}/></div><div className="mt-6 grid gap-4 sm:grid-cols-3"><Metric label="Realistic daily capacity" value={number(capacity.realisticDaily)}/><Metric label="Realistic monthly capacity" value={number(capacity.realisticMonthly)}/><Metric label="Realistic annual capacity" value={number(capacity.realisticAnnual)}/></div><div className="mt-4 rounded-xl bg-slate-50 p-4 text-sm text-slate-600">Theoretical: {number(capacity.theoreticalDaily)} / day · {number(capacity.theoreticalMonthly)} / month · {number(capacity.theoreticalAnnual)} / year. Capital plan: {inr(plan.capitalRequirements)}.</div></Section><PageSaveBar saving={saving} onSave={doSave}/></>
+const strategies: Array<Exclude<ManufacturingPlan['strategy'], 'Not decided'>> = ['Contract manufacturing', 'Own manufacturing', 'Hybrid manufacturing']
+const strategyHint = {
+  'Contract manufacturing': 'Lower initial capital · partner dependency',
+  'Own manufacturing': 'Higher control · higher capital',
+  'Hybrid manufacturing': 'Own critical steps · outsource scale',
+} as const
+
+function Manufacturing({ startup, save }: { startup: Startup; save: (u: StartupUpdate) => Promise<void> }) {
+  const [plan, setPlan] = useState(startup.manufacturing)
+  const [saving, setSaving] = useState(false)
+  const { toast } = useToast()
+  const update = <K extends keyof ManufacturingPlan>(key: K, value: ManufacturingPlan[K]) => setPlan(current => ({ ...current, [key]: value }))
+  const doSave = async () => { setSaving(true); try { await save({ manufacturing: plan, progress: Math.max(startup.progress, 48) }); toast('Manufacturing plan saved') } finally { setSaving(false) } }
+
+  return <>
+    <PageHeader eyebrow="Production system" title="Manufacturing" description="Choose how the idea is built, then compare usable capacity with expected demand." />
+    <ScopeAnchor startup={startup} destination="Production design" />
+    <div className="mb-5 grid gap-3 md:grid-cols-3">{strategies.map(strategy => <button type="button" key={strategy} onClick={() => update('strategy', strategy)} className={`relative rounded-2xl border p-4 text-left ${plan.strategy === strategy ? 'border-brand-600 bg-brand-50 ring-2 ring-brand-100' : 'bg-white hover:border-brand-300'}`}><Factory className="h-5 w-5 text-brand-700" /><h2 className="mt-3 text-sm font-semibold">{strategy}</h2><p className="mt-1 text-xs text-slate-500">{strategyHint[strategy]}</p>{plan.strategy === strategy && <Check className="absolute right-4 top-4 h-4 w-4 text-brand-700" />}</button>)}</div>
+
+    <ModuleVisual startup={{ ...startup, manufacturing: plan }} module="manufacturing" />
+
+    <section className="card mb-5 p-5"><h2 className="font-semibold">Capacity inputs</h2><div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6"><Field label="Factory size (sq ft)" type="number" min="0" value={plan.factorySize} onChange={event => update('factorySize', +event.target.value)} /><Field label="Production lines" type="number" min="0" value={plan.productionLines} onChange={event => update('productionLines', +event.target.value)} /><Field label="Units / hour" type="number" min="0" value={plan.unitsPerHour} onChange={event => update('unitsPerHour', +event.target.value)} /><Field label="Hours / day" type="number" min="0" max="24" value={plan.hoursPerDay} onChange={event => update('hoursPerDay', +event.target.value)} /><Field label="Days / month" type="number" min="0" max="31" value={plan.daysPerMonth} onChange={event => update('daysPerMonth', +event.target.value)} /><Field label="Utilization %" type="number" min="0" max="100" value={plan.utilization} onChange={event => update('utilization', +event.target.value)} /></div></section>
+
+    <details className="card p-5"><summary className="cursor-pointer font-semibold">Supporting assumptions</summary><div className="mt-5 grid gap-4 md:grid-cols-2"><Textarea label="Quality control" value={plan.qualityControl} onChange={event => update('qualityControl', event.target.value)} /><Textarea label="Workforce" value={plan.workforce} onChange={event => update('workforce', event.target.value)} /><Textarea label="Risks" value={plan.risks} onChange={event => update('risks', event.target.value)} /><div className="space-y-4"><Field label="Capital required (₹)" type="number" min="0" value={plan.capitalRequirements} onChange={event => update('capitalRequirements', +event.target.value)} /><Field label="Complexity" value={plan.complexity} onChange={event => update('complexity', event.target.value)} /></div><Textarea label="Advantages" value={plan.advantages} onChange={event => update('advantages', event.target.value)} /><Textarea label="Disadvantages" value={plan.disadvantages} onChange={event => update('disadvantages', event.target.value)} /></div></details>
+    <PageSaveBar saving={saving} onSave={doSave} />
+  </>
 }
-export function ManufacturingPage(){return <StartupPageState>{state=><Manufacturing {...state}/>}</StartupPageState>}
+
+export function ManufacturingPage() { return <StartupPageState>{state => <Manufacturing {...state} />}</StartupPageState> }

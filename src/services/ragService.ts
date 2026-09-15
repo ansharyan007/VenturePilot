@@ -159,7 +159,7 @@ export async function retrieveRagContext(startup: Startup, query: string, limit 
 export function governmentSourcesFor(startup: Startup) {
   const productText = `${startup.category} ${startup.idea} ${readable(startup.product)}`.toLowerCase()
   return complianceKnowledge.filter((document) => {
-    if (document.id === 'bis-crs-electronics') return /laptop|notebook|tablet|electronics|computer|display|charger/.test(productText)
+    if (document.id === 'bis-crs-electronics') return /laptop|notebook|tablet/.test(productText)
     if (document.id === 'dot-wpc-eta') return /wifi|wi-fi|bluetooth|wireless|radio|laptop|phone|tablet|iot|wearable/.test(productText)
     if (document.id === 'cpcb-ewaste-epr') return true
     if (document.id === 'legal-metrology-packaged-commodities') return true

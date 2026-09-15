@@ -35,13 +35,13 @@ const initial = {
   experience: '',
   budget: 1000000,
   idea: '',
-  category: 'Laptop',
+  category: '',
   description: '',
   targetCustomer: '',
   targetMarket: '',
   geographicMarket: 'India',
-  sellingPrice: '45000',
-  launchDuration: '9',
+  sellingPrice: '',
+  launchDuration: '',
   launchUnit: 'months',
 }
 
@@ -78,8 +78,8 @@ export function CreateStartupPage() {
     event.preventDefault()
     if (!user) return
 
-    if (!form.idea.trim() || !form.targetCustomer.trim()) {
-      setError('Startup idea and target customer are required.')
+    if (!form.idea.trim() || !form.targetCustomer.trim() || !form.category) {
+      setError('Startup idea, product category, and target customer are required.')
       return
     }
     if (!isPositiveInteger(form.sellingPrice)) {
@@ -169,21 +169,21 @@ export function CreateStartupPage() {
           <div><h2 className="text-xl font-semibold">Describe the opportunity</h2><p className="mt-1 text-sm text-slate-500">Plain language is perfect. You can refine every field later.</p></div>
         </div>
         <div className="grid gap-5 sm:grid-cols-2">
-          <div className="sm:col-span-2"><Textarea label="Startup idea" value={form.idea} onChange={(event) => set('idea', event.target.value)} placeholder="I want to build affordable laptops for college students in India…" required /></div>
-          <Select label="Product category" value={form.category} onChange={(event) => set('category', event.target.value)}>{categories.map((category) => <option key={category}>{category}</option>)}</Select>
+          <div className="sm:col-span-2"><Textarea label="Startup idea" value={form.idea} onChange={(event) => set('idea', event.target.value)} placeholder="Describe the product, the problem it solves, and who needs it…" required /></div>
+          <Select label="Product category" value={form.category} onChange={(event) => set('category', event.target.value)} required><option value="" disabled>Select a product category</option>{categories.map((category) => <option key={category}>{category}</option>)}</Select>
           <Field
             label="Expected selling price (₹)"
             type="text"
             inputMode="numeric"
             pattern="[1-9][0-9]*"
-            placeholder="45000"
+            placeholder="Enter a whole number"
             value={form.sellingPrice}
             onChange={(event) => set('sellingPrice', normalizePositiveInteger(event.target.value))}
             hint="Positive whole numbers only; no maximum value is imposed."
             required
           />
           <div className="sm:col-span-2"><Textarea label="Product description" value={form.description} onChange={(event) => set('description', event.target.value)} /></div>
-          <Field label="Target customer" value={form.targetCustomer} onChange={(event) => set('targetCustomer', event.target.value)} placeholder="College students" required />
+          <Field label="Target customer" value={form.targetCustomer} onChange={(event) => set('targetCustomer', event.target.value)} placeholder="Who specifically buys or uses this?" required />
           <Field label="Target market" value={form.targetMarket} onChange={(event) => set('targetMarket', event.target.value)} placeholder="Higher education" />
           <Field label="Geographic market" value={form.geographicMarket} onChange={(event) => set('geographicMarket', event.target.value)} />
           <div className="grid grid-cols-[1fr_140px] gap-3">

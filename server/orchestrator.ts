@@ -44,6 +44,15 @@ export function validateEvidence(finding: AgentFinding, ids: Set<string>) {
   if (finding.role === 'compliance' && !supplied.some(id => id.startsWith('g-'))) finding.uncertainties.push('No government source was cited; no legal claim in this output has source support established.')
   return finding
 }
+
+export function governmentChunksFor(startup: Startup) {
+  const product = `${startup.category} ${startup.idea} ${startup.description} ${JSON.stringify(startup.product)}`.toLowerCase()
+  return governmentChunks().filter(chunk => {
+    if (chunk.id.startsWith('g-bis-crs-electronics')) return /laptop|notebook|tablet/.test(product)
+    if (chunk.id.startsWith('g-dot-wpc-eta')) return /wifi|wi-fi|bluetooth|wireless|radio|rf|phone|tablet|iot|wearable/.test(product)
+    return true
+  })
+}
 export async function runAgents(store: VectorStore, uid: string, input: z.infer<typeof requestSchema>, signal: AbortSignal, emit: (p: AgentProgress) => void, dependencies = { embed, invokeAgent }) : Promise<AgentRun> {
   const start = Date.now()
   const progress = (stage: string, state: AgentProgress['state'], detail: string) => emit({ stage, state, detail, elapsedMs: Date.now() - start })
@@ -57,26 +66,32 @@ export async function runAgents(store: VectorStore, uid: string, input: z.infer<
   const chunks = makeChunks(startup)
   const changes = await store.sync(scope, model, chunks, texts => dependencies.embed(texts, signal))
   const legal = selected.includes('compliance')
-  if (legal) await store.sync('government', model, governmentChunks(), texts => dependencies.embed(texts, signal))
+  const relevantGovernment = legal ? governmentChunksFor(startup) : []
+  const governmentScope = legal ? `government:${relevantGovernment.some(chunk => chunk.id.startsWith('g-bis-')) ? 1 : 0}:${relevantGovernment.some(chunk => chunk.id.startsWith('g-dot-')) ? 1 : 0}` : 'government'
+  if (legal) await store.sync(governmentScope, model, relevantGovernment, texts => dependencies.embed(texts, signal))
   progress('Vector index', 'complete', `${changes} changed chunks embedded; ${chunks.length} startup chunks indexed.`)
   progress('Retrieval', 'running', 'Embedding the question and ranking vectors by cosine similarity.')
   const focus: Record<AgentRole, string> = { planner: 'idea target market risks roadmap', product: 'product specifications bom manufacturing', finance: 'financials bom costs capital', compliance: 'product geographic market legal regulatory', team: 'team hiring salary roles workforce', scaling: 'scaling capacity capital roadmap', reviewer: 'evidence conflicts' }
   const queries = await dependencies.embed(selected.map(role => `${input.question}\nRelevant startup fields: ${focus[role]}`), signal)
   const retrieved = selected.flatMap((role, i) => [
     ...store.search([scope], model, queries[i], legal ? 2 : 3),
-    ...(role === 'compliance' ? store.search(['government'], model, queries[i], 3) : []),
+    ...(role === 'compliance' ? store.search([governmentScope], model, queries[i], 3) : []),
   ])
   const unique = [...new Map(retrieved.map(record => [record.id, record])).values()]
   const calculations = { finance: calculateFinance(startup.financials, sumBOM(startup.bom)), capacity: calculateCapacity(startup.manufacturing) }
   if (JSON.stringify(calculations).includes('null')) throw new Error('Financial inputs exceed supported numeric range.')
-  const evidence = [...unique, { id: 'tool-calculations', kind: 'startup' as const, title: 'Deterministic calculation tool', content: JSON.stringify(calculations), score: 1 }]
+  const evidence = [
+    { id: 'venture-scope', kind: 'startup' as const, title: 'Authoritative venture scope', content: JSON.stringify({ category: startup.category, originalIdea: startup.idea, description: startup.description, targetCustomer: startup.targetCustomer, targetMarket: startup.targetMarket, geographicMarket: startup.geographicMarket }), score: 1 },
+    ...unique,
+    { id: 'tool-calculations', kind: 'startup' as const, title: 'Deterministic calculation tool', content: JSON.stringify(calculations), score: 1 },
+  ]
   progress('Retrieval', 'complete', `${evidence.length} evidence records selected, including deterministic calculations.`)
   const ids = new Set(evidence.map(e => e.id))
   const findings: AgentFinding[] = []
   for (const role of selected) {
     signal.throwIfAborted()
     progress(role, 'running', 'Reading selected evidence in a separate model context.')
-    const finding = await dependencies.invokeAgent(role, { question: input.question, previousConversation: input.previous, evidence, startupName: startup.name, provenance: 'Previous conversation is context only, never factual evidence. ' + (startup.isDemo ? 'Illustrative demo assumptions; not real validated evidence' : 'User-entered assumptions; not independently verified'), jurisdiction: startup.geographicMarket, coverage: legal ? 'Government corpus covers India only; other jurisdictions require additional sources.' : 'No government sources requested.' }, signal)
+    const finding = await dependencies.invokeAgent(role, { question: input.question, previousConversation: input.previous, evidence, startupName: startup.name, ventureScope: { category: startup.category, originalIdea: startup.idea }, provenance: 'venture-scope is authoritative. Ignore unrelated product templates or retrieved evidence that conflicts with it. Never assume the venture is a laptop unless venture-scope says so. Previous conversation is context only, never factual evidence. ' + (startup.isDemo ? 'Illustrative demo assumptions; not real validated evidence' : 'User-entered assumptions; not independently verified'), jurisdiction: startup.geographicMarket, coverage: legal ? 'Government corpus covers India only; other jurisdictions require additional sources.' : 'No government sources requested.' }, signal)
     findings.push(validateEvidence(finding, ids))
     progress(role, 'complete', `${finding.model}: ${finding.actions.length} proposed actions, ${finding.uncertainties.length} uncertainties.`)
   }

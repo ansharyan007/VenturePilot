@@ -1,20 +1,19 @@
 import type { Startup } from '../types'
-import { EconomicsExplorer, ProcessFlow } from './VisualPlan'
-import { calculateCapacity, inr } from '../utils/calculations'
+import { calculateCapacity, inr, number } from '../utils/calculations'
 
-export function ModuleVisual({ startup, module }: { startup: Startup; module: string }) {
-  if (module === 'finance') return <EconomicsExplorer startup={startup} />
+export function ModuleVisual({ startup, module }: { startup: Startup; module: 'bom' | 'manufacturing' }) {
   if (module === 'bom') {
-    const parts = [...startup.bom].sort((a, b) => b.quantity * b.unitCost - a.quantity * a.unitCost).slice(0, 8)
-    const max = Math.max(1, ...parts.map(p => p.quantity * p.unitCost))
-    return <section className="card mb-5 p-5"><h2 className="font-semibold">Largest saved component costs</h2><p className="mb-4 mt-1 text-xs text-slate-500">Quantity × unit cost. Edit and save the bill below to refresh this comparison.</p>{parts.map(p => <div className="my-3 grid grid-cols-[minmax(80px,1fr)_2fr_90px] items-center gap-3 text-xs" key={p.id}><span>{p.component}</span><span className="h-6 rounded bg-slate-100"><span className="block h-full rounded bg-brand-500" style={{ width: `${p.quantity * p.unitCost / max * 100}%` }} /></span><span>{inr(p.quantity * p.unitCost)}</span></div>)}</section>
+    const parts = [...startup.bom].filter(item => item.component.trim()).sort((a, b) => b.quantity * b.unitCost - a.quantity * a.unitCost).slice(0, 8)
+    const max = Math.max(1, ...parts.map(item => item.quantity * item.unitCost))
+    return <section className="card mb-5 p-5"><div className="flex items-end justify-between gap-4"><div><h2 className="font-semibold">Cost concentration</h2><p className="mt-1 text-xs text-slate-500">Quantity × unit cost</p></div><span className="text-xs text-slate-500">Top {parts.length || 0}</span></div>{parts.length ? <div className="mt-5 space-y-3">{parts.map(part => <div className="grid grid-cols-[minmax(76px,1fr)_2fr_90px] items-center gap-3 text-xs" key={part.id}><span className="truncate">{part.component}</span><span className="h-5 overflow-hidden rounded bg-slate-100"><span className="block h-full rounded bg-brand-500" style={{ width: `${part.quantity * part.unitCost / max * 100}%` }} /></span><span className="text-right font-semibold">{inr(part.quantity * part.unitCost)}</span></div>)}</div> : <div className="mt-5 rounded-xl border border-dashed p-8 text-center text-sm text-slate-500">Add components to build the cost graph.</div>}</section>
   }
-  if (module === 'manufacturing') {
-    const m = startup.manufacturing
-    return <ProcessFlow title="How saved inputs become monthly capacity" steps={[{ title: `${m.productionLines} lines × ${m.unitsPerHour} units/hour`, detail: 'Parallel production rate' }, { title: `${m.hoursPerDay} hours × ${m.daysPerMonth} days`, detail: 'Monthly operating schedule' }, { title: `${m.utilization}% utilization`, detail: 'Adjust for planned effective operating time' }, { title: `${Math.round(calculateCapacity(m).realisticMonthly)} units/month`, detail: 'Compare this capacity with financial sales assumptions before expansion.' }]} />
-  }
-  if (module === 'roadmap') return <section className="card mb-5 p-5"><h2 className="mb-4 font-semibold">Milestone board · saved status</h2><div className="grid gap-4 md:grid-cols-3">{(['Planned', 'In progress', 'Complete'] as const).map(status => <div key={status} className="rounded-xl bg-slate-50 p-3"><h3 className="font-semibold">{status} · {startup.roadmap.filter(m => m.status === status).length}</h3>{startup.roadmap.filter(m => m.status === status).map(m => <div className="mt-3 rounded-lg border bg-white p-3 text-sm" key={m.id}>{m.name}<span className="mt-1 block text-xs text-slate-500">{m.timing}</span></div>)}</div>)}</div></section>
-  if (module === 'product') return <section className="card mb-5 p-5"><h2 className="font-semibold">Product specification blocks</h2><p className="mt-1 text-xs text-slate-500">Saved specifications → component selection → manufacturing requirements.</p><div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">{startup.product.specs.map(s => <div key={s.id} className="rounded-xl border-l-4 border-brand-500 bg-brand-50 p-4"><h3 className="text-xs font-semibold uppercase text-brand-700">{s.name}</h3><p className="mt-2 text-sm">{s.value || 'Target missing'}</p></div>)}</div></section>
-  if (module === 'identity') return <ProcessFlow title="Business model relationships · saved assumptions" steps={[{ title: 'Customer', detail: startup.targetCustomer || 'Not specified' }, { title: 'Problem', detail: startup.identity.problem || 'Not specified' }, { title: 'Value', detail: startup.identity.valueProposition || 'Not specified' }, { title: 'Revenue model', detail: startup.identity.businessModel || 'Not specified' }]} />
-  return null
+
+  const capacity = calculateCapacity(startup.manufacturing)
+  const measures = [
+    { label: 'Theoretical', value: capacity.theoreticalMonthly, tone: 'bg-slate-400' },
+    { label: 'Realistic', value: capacity.realisticMonthly, tone: 'bg-brand-600' },
+    { label: 'Sales target', value: startup.financials.monthlySales, tone: 'bg-amber-500' },
+  ]
+  const max = Math.max(1, ...measures.map(item => item.value))
+  return <section className="card mb-5 p-5"><div className="flex items-end justify-between gap-4"><div><h2 className="font-semibold">Monthly capacity vs demand</h2><p className="mt-1 text-xs text-slate-500">Saved operating inputs</p></div><strong className="font-display text-2xl text-brand-800">{number(capacity.realisticMonthly)}</strong></div><div className="mt-5 space-y-4">{measures.map(item => <div key={item.label} className="grid grid-cols-[90px_1fr_80px] items-center gap-3 text-xs"><span>{item.label}</span><span className="h-6 overflow-hidden rounded bg-slate-100"><span className={`block h-full rounded ${item.tone}`} style={{ width: `${item.value / max * 100}%` }} /></span><span className="text-right font-semibold">{number(item.value)}</span></div>)}</div></section>
 }

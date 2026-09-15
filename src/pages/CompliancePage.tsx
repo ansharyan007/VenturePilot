@@ -8,7 +8,7 @@ import { useToast } from '../context/ToastContext'
 import { ComplianceWorkbench } from '../components/ComplianceWorkbench'
 import { mergeProposals } from '../services/decisionWorkflow'
 import { COMPLIANCE_KNOWLEDGE_VERSION } from '../data/complianceKnowledge'
-import { ProcessFlow } from '../components/VisualPlan'
+import { AgentWorkbench } from '../components/AgentWorkbench'
 
 function Compliance({ startup, save }: { startup: Startup; save: (update: StartupUpdate) => Promise<void> }) {
   const [items, setItems] = useState(startup.compliance)
@@ -52,16 +52,12 @@ function Compliance({ startup, save }: { startup: Startup; save: (update: Startu
     </div>
 
     <ComplianceWorkbench key={startup.id} startup={startup} onAdd={proposals => setItems(current => mergeProposals(current, proposals))} />
-    <ProcessFlow title="From evidence to launch review" steps={[
-      { title: 'Product & market', detail: `${startup.category} · ${startup.founder.country}. Confirm the exact model, location and business role.` },
-      { title: 'Official evidence', detail: 'The checklist builder selects bundled government summaries using category and specifications. Each sourced item links to the original document.' },
-      { title: 'Review applicability', detail: 'Read the linked source, check current requirements and record the next action. Generated items start as unconfirmed.' },
-      { title: 'Track completion', detail: `${complete} of ${items.length} items marked complete. Status is entered by you; it is not regulatory approval.` },
-    ]} />
     <div className="card mb-5 p-5">
       <div className="flex justify-between text-sm"><span className="font-semibold">Checklist progress</span><span>{complete} of {items.length} complete</span></div>
       <Progress className="mt-3" value={items.length ? complete / items.length * 100 : 0} />
     </div>
+
+    <details className="mb-5 print:hidden"><summary className="cursor-pointer rounded-xl border border-brand-200 bg-brand-50 p-3 text-sm font-semibold text-brand-800">Ask compliance specialist + reviewer</summary><AgentWorkbench startup={{ ...startup, compliance: items }} save={save} initialRole="compliance" /></details>
 
     <div className="space-y-4">
       {items.map((item) => <details key={item.id} className="card p-5">

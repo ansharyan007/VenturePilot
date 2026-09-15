@@ -209,8 +209,27 @@ are rejected, but a valid ID alone cannot prove that a claim follows from its so
 - **Roadmap:** saved-status board and editable milestones. **Risks:** severity matrix.
 - **Supply chain / Distribution:** connected stage flows and expandable editing.
 - **Identity:** customer → problem → value → business model flow.
-- **Overview / Visual Plan:** clickable relationship map and connected operating views.
-- Every startup module exposes a relevant agent review and calculated decision checks.
+- **Startup Journey:** nine clickable stages from opportunity validation through
+  responsible scaling. Each stage calculates workspace readiness, shows unmet
+  dependencies, visualizes input → work → output, identifies the next missing item,
+  and links directly to the connected modules.
+- **Overview:** a compact stage strip plus four decision metrics; detailed opportunity
+  assumptions stay collapsed until edited.
+- **Identity:** a selectable evidence → logic → direction map explains which original
+  inputs should ground the customer, problem, solution, value, mission and vision.
+- **Product / BOM / Manufacturing / Finance:** graphs and flows appear before compact
+  editors. Detailed specifications, component rows, operating assumptions and financial
+  inputs expand only when needed.
+- **Agent placement:** general multi-agent work lives in Copilot; Compliance keeps one
+  collapsed specialist review because source-grounded legal review is relevant there.
+
+New real workspaces start empty except for values explicitly supplied during creation.
+They no longer clone the laptop demo. On load, an exact legacy laptop-template signature
+inside a non-laptop venture is removed from the in-memory workspace so it cannot enter
+RAG or agent requests; genuine laptop ventures and customized data are not matched.
+Every agent run also receives a non-optional `venture-scope` evidence record containing
+the original category and idea. Product-specific BIS and WPC evidence is filtered out
+unless the saved venture scope contains matching product or wireless terms.
 
 Copilot displays actual streamed progress events, specialist/model identities,
 reviewer concerns, retrieved evidence and action cards. There is **no artificial

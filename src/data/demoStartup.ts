@@ -47,6 +47,61 @@ export const demoStartup: Omit<Startup, 'id' | 'ownerId'> = {
 }
 
 export function createStartupDraft(input: { founderName: string; name: string; country: string; region: string; founderCount: number; experience: string; budget: number; idea: string; category: string; description: string; targetCustomer: string; targetMarket: string; geographicMarket: string; sellingPrice: number; launchTimeline: string }): Omit<Startup, 'id' | 'ownerId' | 'createdAt' | 'updatedAt'> {
-  const base = structuredClone(demoStartup)
-  return { ...base, name: input.name, category: input.category, idea: input.idea, description: input.description, targetCustomer: input.targetCustomer, targetMarket: input.targetMarket, geographicMarket: input.geographicMarket, expectedSellingPrice: input.sellingPrice, launchTimeline: input.launchTimeline, isDemo: false, progress: 18, stage: 'Idea validation', founder: { name: input.founderName, country: input.country, region: input.region, founderCount: input.founderCount, experience: input.experience, availableBudget: input.budget }, financials: { ...base.financials, initialCapital: input.budget, sellingPrice: input.sellingPrice }, analysis: { ...base.analysis, concept: input.description || input.idea, problem: `The concept needs to validate the most urgent problem faced by ${input.targetCustomer}.`, targetCustomer: input.targetCustomer, feasibility: 'This early assessment is a planning hypothesis. Validate demand, specifications, compliance scope, and target cost before committing capital.' }, identity: { ...base.identity, targetMarket: input.targetMarket, customerPersona: input.targetCustomer }, conversations: [] }
+  return {
+    name: input.name, category: input.category, idea: input.idea, description: input.description,
+    targetMarket: input.targetMarket, targetCustomer: input.targetCustomer,
+    geographicMarket: input.geographicMarket, expectedSellingPrice: input.sellingPrice,
+    launchTimeline: input.launchTimeline, stage: 'Idea validation', progress: 10, isDemo: false,
+    founder: { name: input.founderName, country: input.country, region: input.region, founderCount: input.founderCount, experience: input.experience, availableBudget: input.budget },
+    analysis: {
+      concept: input.description || input.idea, problem: '', targetCustomer: input.targetCustomer,
+      valueProposition: '', businessModel: '', productStrategy: '', competitivePositioning: '', feasibility: '',
+      scores: { 'Market potential': 0, 'Technical complexity': 0, 'Capital requirement': 0, 'Manufacturing difficulty': 0, 'Regulatory complexity': 0, Scalability: 0 },
+    },
+    identity: { mission: '', vision: '', problem: '', solution: input.description, valueProposition: '', targetMarket: input.targetMarket, customerPersona: input.targetCustomer, businessModel: '', brandPositioning: '' },
+    product: { mvp: '', futureProducts: '', technicalRequirements: '', differentiators: '', specs: [] },
+    bom: [],
+    manufacturing: { strategy: 'Not decided', advantages: '', disadvantages: '', complexity: '', capitalRequirements: 0, workforce: '', qualityControl: '', risks: '', factorySize: 0, productionLines: 0, unitsPerHour: 0, hoursPerDay: 0, daysPerMonth: 0, utilization: 0 },
+    supplyChain: [], distribution: { model: '', stages: [] }, compliance: [],
+    financials: { initialCapital: input.budget, sellingPrice: input.sellingPrice, manufacturingCost: 0, packaging: 0, logistics: 0, employeeExpenses: 0, rent: 0, marketing: 0, technology: 0, compliance: 0, otherExpenses: 0, monthlySales: 0 },
+    team: [], risks: [], roadmap: [], scaling: [], conversations: [],
+  }
+}
+
+/** Removes the exact laptop-demo payload accidentally copied into older non-laptop workspaces. */
+export function sanitizeLegacyLaptopTemplate(startup: Startup): Startup {
+  const scope = `${startup.category} ${startup.idea} ${startup.description}`
+  const laptopVenture = /\b(laptop|notebook)\b/i.test(scope)
+  const leakedProduct = /14-inch productivity laptop/i.test(startup.product?.mvp || '')
+  const leakedBom = startup.bom?.some(item => item.component === 'Processor + chipset') && startup.bom?.some(item => item.component === 'Display assembly')
+  if (startup.isDemo || laptopVenture || !leakedProduct || !leakedBom) return startup
+
+  const sameTemplate = (value: unknown, template: unknown) => JSON.stringify(value, (key, item) => key === 'id' ? undefined : item) === JSON.stringify(template, (key, item) => key === 'id' ? undefined : item)
+  const identity = Object.fromEntries(Object.entries(startup.identity).map(([key, value]) => [key, value === demoStartup.identity[key as keyof Startup['identity']] ? '' : value])) as unknown as Startup['identity']
+  const product = {
+    mvp: startup.product.mvp === demoStartup.product.mvp ? '' : startup.product.mvp,
+    futureProducts: startup.product.futureProducts === demoStartup.product.futureProducts ? '' : startup.product.futureProducts,
+    technicalRequirements: startup.product.technicalRequirements === demoStartup.product.technicalRequirements ? '' : startup.product.technicalRequirements,
+    differentiators: startup.product.differentiators === demoStartup.product.differentiators ? '' : startup.product.differentiators,
+    specs: sameTemplate(startup.product.specs, demoStartup.product.specs) ? [] : startup.product.specs,
+  }
+  const demoBomKeys = new Set(demoStartup.bom.map(item => `${item.component}|${item.quantity}|${item.unitCost}|${item.supplierType}|${item.criticality}|${item.notes}`))
+  const bom = startup.bom.filter(item => !demoBomKeys.has(`${item.component}|${item.quantity}|${item.unitCost}|${item.supplierType}|${item.criticality}|${item.notes}`))
+  const blankManufacturing: Startup['manufacturing'] = { strategy: 'Not decided', advantages: '', disadvantages: '', complexity: '', capitalRequirements: 0, workforce: '', qualityControl: '', risks: '', factorySize: 0, productionLines: 0, unitsPerHour: 0, hoursPerDay: 0, daysPerMonth: 0, utilization: 0 }
+  const analysis = { ...startup.analysis }
+  ;(['productStrategy', 'competitivePositioning', 'feasibility'] as const).forEach(key => { if (analysis[key] === demoStartup.analysis[key]) analysis[key] = '' })
+  if (sameTemplate(analysis.scores, demoStartup.analysis.scores)) analysis.scores = { 'Market potential': 0, 'Technical complexity': 0, 'Capital requirement': 0, 'Manufacturing difficulty': 0, 'Regulatory complexity': 0, Scalability: 0 }
+  return {
+    ...startup, progress: Math.min(startup.progress, 18),
+    analysis, identity, product, bom,
+    manufacturing: sameTemplate(startup.manufacturing, demoStartup.manufacturing) ? blankManufacturing : startup.manufacturing,
+    supplyChain: sameTemplate(startup.supplyChain, demoStartup.supplyChain) ? [] : startup.supplyChain,
+    distribution: sameTemplate(startup.distribution, demoStartup.distribution) ? { model: '', stages: [] } : startup.distribution,
+    compliance: sameTemplate(startup.compliance, demoStartup.compliance) ? [] : startup.compliance,
+    team: sameTemplate(startup.team, demoStartup.team) ? [] : startup.team,
+    risks: sameTemplate(startup.risks, demoStartup.risks) ? [] : startup.risks,
+    roadmap: sameTemplate(startup.roadmap, demoStartup.roadmap) ? [] : startup.roadmap,
+    scaling: sameTemplate(startup.scaling, demoStartup.scaling) ? [] : startup.scaling,
+    financials: Object.fromEntries(Object.entries(startup.financials).map(([key, value]) => [key, !['initialCapital', 'sellingPrice'].includes(key) && value === demoStartup.financials[key as keyof Startup['financials']] ? 0 : value])) as unknown as Startup['financials'],
+  }
 }

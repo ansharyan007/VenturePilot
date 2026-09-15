@@ -7,9 +7,10 @@ import { createServer } from 'node:http'
 import { invokeAgent } from './models.ts'
 import { allowedGovernmentUrl } from './ingestGovernment.ts'
 import { VectorStore, cosine } from './vectorStore.ts'
-import { requestSchema, runAgents, selectAgents, validateEvidence } from './orchestrator.ts'
+import { governmentChunksFor, requestSchema, runAgents, selectAgents, validateEvidence } from './orchestrator.ts'
 import { demoStartup } from '../src/data/demoStartup.ts'
 import type { AgentFinding, AgentRole } from '../src/types/agents.ts'
+import type { Startup } from '../src/types/index.ts'
 
 const make = (id: string, content = 'hardware') => ({ id, content, title: id, kind: 'startup' as const })
 const embeddings = async (texts: string[]) => texts.map(text => text.includes('hardware') ? [1, 0] : [0, 1])
@@ -46,6 +47,8 @@ test('only needed specialists execute and reviewer receives their findings', asy
     assert.deepEqual(calls, ['finance', 'team', 'reviewer'])
     assert.equal(result.findings.length, 2)
     assert.equal((inputs[2] as { specialists: AgentFinding[] }).specialists[0].role, 'finance')
+    assert.equal((inputs[0] as { ventureScope: { category: string } }).ventureScope.category, 'Laptop')
+    assert.ok(result.evidence.some(item => item.id === 'venture-scope'))
     assert.equal(result.mode, 'multi-agent')
     await assert.rejects(runAgents(store, 'bob', request, new AbortController().signal, () => {}, { embed: embeddings, invokeAgent }), /ownership/)
     assert.deepEqual(selectAgents('hello'), ['planner'])
@@ -53,6 +56,14 @@ test('only needed specialists execute and reviewer receives their findings', asy
     assert.deepEqual(selectAgents('legal finance scaling team product'), ['compliance', 'finance'])
     assert.throws(() => validateEvidence({ ...result.review, evidenceIds: ['invented'] }, new Set(['tool-calculations'])), /unknown evidence/)
   } finally { store.close() }
+})
+
+test('government RAG excludes laptop and radio evidence outside venture scope', () => {
+  const semiconductor = { ...demoStartup, id: 'chip', ownerId: 'owner', category: 'Semiconductor', idea: 'Fabricate low-power industrial sensor ICs', description: '', product: { mvp: '', futureProducts: '', technicalRequirements: '', differentiators: '', specs: [] } } as Startup
+  const ids = governmentChunksFor(semiconductor).map(chunk => chunk.id)
+  assert.equal(ids.some(id => id.startsWith('g-bis-crs-electronics')), false)
+  assert.equal(ids.some(id => id.startsWith('g-dot-wpc-eta')), false)
+  assert.equal(governmentChunksFor({ ...demoStartup, id: 'demo', ownerId: 'owner' } as Startup).some(chunk => chunk.id.startsWith('g-bis-crs-electronics')), true)
 })
 
 test('government ingestion allows only configured official HTTPS hosts', () => {
