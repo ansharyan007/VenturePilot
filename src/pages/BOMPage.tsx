@@ -8,6 +8,7 @@ import { ModuleVisual } from '../components/ModuleVisual'
 import type { BOMItem, Startup, StartupUpdate } from '../types'
 import { inr, sumBOM } from '../utils/calculations'
 import { useToast } from '../context/ToastContext'
+import { metricCoverage } from '../utils/workspacePlanning'
 
 function BOM({ startup, save }: { startup: Startup; save: (u: StartupUpdate) => Promise<void> }) {
   const [items, setItems] = useState(startup.bom)
@@ -19,7 +20,7 @@ function BOM({ startup, save }: { startup: Startup; save: (u: StartupUpdate) => 
   const doSave = async () => { setSaving(true); try { await save({ bom: items, progress: Math.max(startup.progress, 38) }); toast('Bill of materials saved') } finally { setSaving(false) } }
 
   return <>
-    <PageHeader eyebrow="Cost structure" title="Bill of Materials" description="See which parts drive cost, then edit only the inputs behind the graph." actions={<div className="rounded-xl bg-ink px-4 py-2.5 text-white"><span className="text-xs text-slate-400">BOM / unit</span><span className="ml-3 font-display font-semibold">{inr(total)}</span></div>} />
+    <PageHeader eyebrow="Cost structure" title="Bill of Materials" description="See which parts drive cost, then edit only the inputs behind the graph." actions={<div className="rounded-xl bg-ink px-4 py-2.5 text-white"><span className="text-xs text-slate-400">BOM / unit</span><span className="ml-3 font-display font-semibold">{metricCoverage({ ...startup, bom: items }).bom ? inr(total) : 'Not estimated'}</span></div>} />
     <ScopeAnchor startup={startup} destination="Component cost" />
     <ModuleVisual startup={{ ...startup, bom: items }} module="bom" />
     <details className="card overflow-hidden" open={items.length === 0}>

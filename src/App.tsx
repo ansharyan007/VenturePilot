@@ -27,6 +27,7 @@ const RoadmapPage = lazy(() => import('./pages/RoadmapPage').then((module) => ({
 const BlueprintPage = lazy(() => import('./pages/BlueprintPage').then((module) => ({ default: module.BlueprintPage })))
 const CopilotPage = lazy(() => import('./pages/CopilotPage').then((module) => ({ default: module.CopilotPage })))
 const SettingsPage = lazy(() => import('./pages/SettingsPage').then((module) => ({ default: module.SettingsPage })))
+const ApiStatusPage = lazy(() => import('./pages/ApiStatusPage').then((module) => ({ default: module.ApiStatusPage })))
 
 function RouteLoading() {
   return <div className="flex min-h-[50vh] items-center justify-center"><span className="h-7 w-7 animate-spin rounded-full border-2 border-brand-100 border-t-brand-600" aria-label="Loading page" /></div>
@@ -63,6 +64,7 @@ export default function App() {
             <Route path="/startup/:startupId/blueprint" element={<BlueprintPage />} />
             <Route path="/startup/:startupId/copilot" element={<CopilotPage />} />
             <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/api-status" element={<ApiStatusPage />} />
           </Route>
         </Route>
       </Route>

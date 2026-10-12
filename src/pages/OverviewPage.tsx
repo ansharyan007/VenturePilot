@@ -7,6 +7,7 @@ import { calculateCapacity, calculateFinance, inr, number, sumBOM } from '../uti
 import { buildStartupJourney, journeyProgress } from '../utils/journey'
 import type { IdeaAnalysis, Startup, StartupUpdate } from '../types'
 import { useToast } from '../context/ToastContext'
+import { metricCoverage } from '../utils/workspacePlanning'
 
 function Overview({ startup, save }: { startup: Startup; save: (u: StartupUpdate) => Promise<void> }) {
   const { toast } = useToast()
@@ -14,6 +15,8 @@ function Overview({ startup, save }: { startup: Startup; save: (u: StartupUpdate
   const [saving, setSaving] = useState(false)
   const finance = calculateFinance(startup.financials, sumBOM(startup.bom))
   const capacity = calculateCapacity(startup.manufacturing)
+  const coverage = metricCoverage(startup)
+  const estimate = startup.planningDraft ? 'Draft estimate · needs validation' : undefined
   const stages = buildStartupJourney(startup)
   const current = stages.find(stage => stage.status !== 'complete') || stages.at(-1)!
   const overall = journeyProgress(stages)
@@ -29,7 +32,7 @@ function Overview({ startup, save }: { startup: Startup; save: (u: StartupUpdate
       <div className="flex flex-wrap items-center justify-between gap-3 p-5"><p className="flex items-center gap-2 text-sm text-slate-600"><Circle className="h-4 w-4 text-amber-500" />Next: {current.checks.find(check => !check.complete)?.label || 'Review supporting evidence'}</p><Link className="btn-primary" to={`/startup/${startup.id}/visual-plan`}>Open journey <ArrowRight className="h-4 w-4" /></Link></div>
     </section>
 
-    <div className="mb-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><Metric label="BOM / unit" value={inr(sumBOM(startup.bom))} /><Metric label="Gross margin" value={`${number(finance.grossMargin)}%`} /><Metric label="Monthly capacity" value={number(capacity.realisticMonthly)} /><Metric label="Critical open risks" value={number(startup.risks.filter(risk => risk.status !== 'Resolved' && risk.probability * risk.impact >= 15).length)} /></div>
+    <div className="mb-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><Metric label="BOM / unit" value={coverage.bom ? inr(sumBOM(startup.bom)) : 'Not estimated'} detail={coverage.bom ? estimate : 'Add components and costs'} /><Metric label="Gross margin" value={coverage.finance ? `${number(finance.grossMargin)}%` : 'Not estimated'} detail={coverage.finance ? estimate : 'Needs a costed BOM and selling price'} /><Metric label="Monthly capacity" value={coverage.capacity ? number(capacity.realisticMonthly) : 'Not planned'} detail={coverage.capacity ? estimate : 'Set production or receiving throughput'} /><Metric label="Critical open risks" value={coverage.risks ? number(startup.risks.filter(risk => risk.status !== 'Resolved' && risk.probability * risk.impact >= 15).length) : 'Not assessed'} detail={coverage.risks ? estimate : 'An empty register does not mean zero risk'} /></div>
 
     <details className="card p-5"><summary className="cursor-pointer font-semibold">Edit opportunity assumptions</summary><div className="mt-5 grid gap-4 md:grid-cols-2">{([['concept', 'Concept'], ['problem', 'Problem'], ['targetCustomer', 'Target customer'], ['valueProposition', 'Value'], ['businessModel', 'Revenue model'], ['feasibility', 'Feasibility evidence']] as const).map(([key, label]) => <Textarea key={key} label={label} value={analysis[key]} onChange={event => setText(key, event.target.value)} />)}</div><div className="mt-5 flex items-center justify-between gap-3"><Link className="text-sm font-semibold text-brand-700" to={`/startup/${startup.id}/identity`}>See identity reasoning →</Link><Button loading={saving} onClick={doSave}>Save</Button></div></details>
   </>

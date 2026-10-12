@@ -1,5 +1,6 @@
 import type { Startup } from '../types'
 import { calculateCapacity, inr, number } from '../utils/calculations'
+import { metricCoverage } from '../utils/workspacePlanning'
 
 export function ModuleVisual({ startup, module }: { startup: Startup; module: 'bom' | 'manufacturing' }) {
   if (module === 'bom') {
@@ -9,6 +10,7 @@ export function ModuleVisual({ startup, module }: { startup: Startup; module: 'b
   }
 
   const capacity = calculateCapacity(startup.manufacturing)
+  if (!metricCoverage(startup).capacity) return <section className="card mb-5 p-5"><h2 className="font-semibold">Monthly capacity is not planned yet</h2><p className="mt-2 text-sm text-slate-500">Build the initial plan or enter throughput, operating hours, days and utilization below to see the capacity chart.</p></section>
   const measures = [
     { label: 'Theoretical', value: capacity.theoreticalMonthly, tone: 'bg-slate-400' },
     { label: 'Realistic', value: capacity.realisticMonthly, tone: 'bg-brand-600' },

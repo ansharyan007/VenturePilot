@@ -48,6 +48,10 @@ export class VectorStore {
     if (rows.some(row => JSON.parse(row.vector).length !== query.length)) throw new Error('Query/index embedding dimensions differ. Clear the index before retrying.')
     return rows.map(row => ({ ...JSON.parse(row.document), score: cosine(query, JSON.parse(row.vector)) } as AgentEvidence)).filter(r => r.score > 0).sort((a, b) => b.score - a.score).slice(0, count)
   }
+  get(scope: string, model: string, id: string): AgentEvidence | undefined {
+    const row = this.db.prepare('SELECT document FROM vectors WHERE scope=? AND model=? AND id=?').get(scope, model, id) as { document: string } | undefined
+    return row ? { ...JSON.parse(row.document), score: 1 } as AgentEvidence : undefined
+  }
   remove(scope: string) { this.db.prepare('DELETE FROM vectors WHERE scope=?').run(scope) }
   close() { this.db.close() }
 }

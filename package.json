@@ -6,9 +6,10 @@
   "scripts": {
     "dev": "vite",
     "dev:full": "node scripts/dev.mjs",
-    "server": "node --env-file-if-exists=server/.env --import tsx server/index.ts",
+    "server": "node --require ./scripts/tsx-userinfo-shim.cjs --env-file-if-exists=server/.env --import tsx server/index.ts",
     "check:server": "tsc -p server/tsconfig.json",
-    "test:server": "node --import tsx --test server/tests.mts",
+    "verify:planning": "node --require ./scripts/tsx-userinfo-shim.cjs --env-file-if-exists=server/.env --import tsx server/verifyWorkspacePlan.mts",
+    "test:server": "node --require ./scripts/tsx-userinfo-shim.cjs --import tsx --test server/tests.mts",
     "ingest:government": "node --env-file-if-exists=server/.env --import tsx server/ingest.ts",
     "setup:models": "node --env-file-if-exists=server/.env --import tsx server/setupModels.ts",
     "build": "tsc -b && vite build",

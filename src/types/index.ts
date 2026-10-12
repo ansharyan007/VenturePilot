@@ -43,6 +43,7 @@ export interface RetrievedContext {
 }
 
 export interface Startup {
+  planningDraft?: { generatedAt: string; model: string; modules: string[]; assumptions: string[]; missingInformation: string[]; review: string }
   id: string; ownerId: string; name: string; category: string; customCategory?: string; idea: string; description: string; targetMarket: string; targetCustomer: string; geographicMarket: string; expectedSellingPrice: number; launchTimeline: string; stage: StartupStage; progress: number; isDemo: boolean; createdAt: string; updatedAt: string
   founder: FounderProfile; analysis: IdeaAnalysis; identity: Identity; product: ProductPlan; bom: BOMItem[]; manufacturing: ManufacturingPlan; supplyChain: FlowStage[]; distribution: DistributionPlan; compliance: ComplianceItem[]; financials: FinancialModel; team: TeamRole[]; risks: Risk[]; roadmap: Milestone[]; scaling: ScalingStage[]; conversations: ConversationMessage[]
 }

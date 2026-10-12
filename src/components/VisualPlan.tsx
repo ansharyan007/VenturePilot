@@ -3,18 +3,20 @@ import { Link } from 'react-router-dom'
 import { ArrowDown, ArrowRight } from 'lucide-react'
 import type { Startup } from '../types'
 import { calculateCapacity, calculateFinance, inr, number, sumBOM } from '../utils/calculations'
+import { metricCoverage } from '../utils/workspacePlanning'
 
 export function StartupMap({ startup }: { startup: Startup }) {
   const [selected, setSelected] = useState('product')
   const marker = useId().replace(/:/g, '')
   const finance = calculateFinance(startup.financials, sumBOM(startup.bom))
+  const coverage = metricCoverage(startup)
   const nodes = [
     { id: 'identity', title: 'Customer & idea', value: startup.targetCustomer || 'Define your customer', x: 15, y: 35 },
     { id: 'product', title: 'Product design', value: `${startup.product.specs.length} saved specifications`, x: 310, y: 35 },
-    { id: 'bom', title: 'Components / BOM', value: `${inr(sumBOM(startup.bom))} per unit`, x: 605, y: 35 },
+    { id: 'bom', title: 'Components / BOM', value: coverage.bom ? `${inr(sumBOM(startup.bom))} per unit` : 'Costs not estimated', x: 605, y: 35 },
     { id: 'compliance', title: 'Compliance', value: `${startup.compliance.filter(i => i.status === 'Complete').length}/${startup.compliance.length} marked complete`, x: 15, y: 205 },
-    { id: 'manufacturing', title: 'Manufacturing', value: `${number(calculateCapacity(startup.manufacturing).realisticMonthly)} units / month`, x: 310, y: 205 },
-    { id: 'finance', title: 'Unit economics', value: `${number(finance.grossMargin)}% gross margin`, x: 605, y: 205 },
+    { id: 'manufacturing', title: 'Manufacturing', value: coverage.capacity ? `${number(calculateCapacity(startup.manufacturing).realisticMonthly)} units / month` : 'Capacity not planned', x: 310, y: 205 },
+    { id: 'finance', title: 'Unit economics', value: coverage.finance ? `${number(finance.grossMargin)}% gross margin` : 'Needs cost inputs', x: 605, y: 205 },
     { id: 'roadmap', title: 'Launch milestones', value: startup.launchTimeline || 'Set launch timing', x: 15, y: 375 },
     { id: 'distribution', title: 'Delivery to customer', value: `${startup.distribution.stages.length} distribution stages`, x: 310, y: 375 },
     { id: 'scaling', title: 'Scale the business', value: `${startup.scaling.length} planned stages`, x: 605, y: 375 },
@@ -73,6 +75,7 @@ export function EconomicsExplorer({ startup }: { startup: Startup }) {
   const result = calculateFinance(model, bom)
   const parts = [['Components', bom], ['Assembly', model.manufacturingCost], ['Packaging', model.packaging], ['Logistics', model.logistics]] as const
   const colors = ['bg-emerald-600', 'bg-blue-500', 'bg-amber-500', 'bg-violet-500']
+  if (!metricCoverage(startup).finance) return <section className="card my-5 p-5"><h2 className="font-semibold">Unit economics needs cost inputs</h2><p className="mt-2 text-sm text-slate-500">Fill the missing planning sections or add a costed BOM and selling price to explore margin and break-even.</p></section>
   return <section className="card my-5 p-5"><h2 className="text-lg font-semibold">See what a decision changes</h2><p className="mt-1 text-sm text-slate-500">Explore price and component costs. This simulation does not save changes.</p><div className="my-5 grid gap-5 sm:grid-cols-2">{[['Selling price change', priceChange, setPriceChange], ['Component cost change', costChange, setCostChange]].map(([label, value, setter]) => <label key={String(label)} className="text-sm font-medium">{String(label)}: {Number(value) > 0 ? '+' : ''}{Number(value)}%<input className="mt-3 block w-full accent-emerald-600" type="range" min="-50" max="50" step="1" value={Number(value)} onChange={e => (setter as (n: number) => void)(Number(e.target.value))} /></label>)}</div>
     <div className="flex h-8 overflow-hidden rounded-lg" aria-label="Unit cost composition">{parts.map(([label, value], i) => <div key={label} title={`${label}: ${inr(value)}`} className={colors[i]} style={{ width: `${result.unitCost > 0 ? Math.max(0, value) / result.unitCost * 100 : 0}%` }} />)}</div><div className="mt-3 flex flex-wrap gap-4 text-xs">{parts.map(([label, value], i) => <span key={label} className="flex items-center gap-2"><span className={`h-3 w-3 rounded ${colors[i]}`} />{label}: {inr(value)}</span>)}</div>
     <ProcessFlow title="The calculation" steps={[

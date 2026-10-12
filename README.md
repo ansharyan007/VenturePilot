@@ -24,8 +24,7 @@ the model service is unavailable.
 2. Download the configured models (these downloads require disk space and RAM):
 
 ```bash
-ollama pull qwen2.5:3b
-ollama pull llama3.2:3b
+ollama pull qwen3:8b
 ollama pull nomic-embed-text
 ```
 
@@ -46,12 +45,70 @@ On Windows, `powershell -File scripts/setup-ollama.ps1` optionally downloads a
 checksum-verified portable runtime into `server/.runtime`; the model helper can
 start that runtime with model files under `server/data/models` and logs in
 `server/data/ollama.log`. Downloads are large and are never triggered by a question.
+If the default Ollama pull repeatedly stalls on a slow connection, run
+`powershell -File scripts/finish-qwen3-download.ps1` to resume the pinned official
+`qwen3:8b` blob, verify its SHA-256 and register it with Ollama.
 
-During this implementation, the official runtime download failed with connection
-resets. Live model inference therefore remains unverified on this machine; install
-Ollama and pull the models before expecting Copilot to generate answers.
+The `qwen3:8b` download is approximately 5.2 GB. If Ollama or a required model is
+unavailable, Copilot displays a setup error and does not generate a substitute answer.
 
 ## How the agents collaborate
+
+### Initial workspace generation and recovering empty startups
+
+Creating a startup saves the original founder inputs first, then opens a real Ollama
+planning run automatically. For startups created before this feature, open any
+startup module and select **Fill missing sections**. This uses the saved idea and
+category, rather than copying the laptop demo, to populate the initial workspace:
+
+```mermaid
+flowchart LR
+  A[Saved idea + founder inputs] --> B[SQLite embeddings + scoped retrieval]
+  B --> C[Opportunity + identity]
+  C --> D[Product + BOM + operations]
+  D --> E[Supply chain + distribution + compliance candidates]
+  E --> F[Team + financial scenario]
+  F --> G[Risks + roadmap + scaling]
+  G --> H[Reviewer + deterministic calculations]
+  H --> I[Fill empty fields + save to Firestore]
+```
+
+`POST /api/workspace/plan` is authenticated like Copilot and streams actual progress.
+It uses at most five specialist drafting calls plus a Reviewer, executed sequentially;
+populated sections are skipped. Invalid structured output can be retried once per
+call. Its total deadline is twelve minutes; individual Ollama calls retain the
+120-second timeout. The existing Copilot question workflow remains separately bounded.
+Generation requires installed models and the backend; failures are shown explicitly.
+Drafting and ordinary Copilot calls use Ollama JSON-schema output constraints to keep
+numeric fields typed, module names valid and citations inside the supplied evidence
+ID allowlist. The server still validates responses independently. Drafting uses an
+8,192-token context and compact three-item starter lists to limit local memory use.
+
+Generated product targets, component costs, throughput, demand, payroll and risk
+ratings are **unverified draft assumptions**. They are labelled throughout the
+workspace and recorded in the startup's `planningDraft` metadata with assumptions,
+missing evidence, model, generation time and reviewer notes. Import/resale ideas use
+finished-unit sourcing and receiving/QA throughput; semiconductor ideas use their
+own design/foundry/test context. Compliance candidates retrieve the existing official
+source corpus and always start **Not started / Needs review**. Milestones and scale
+gates are never automatically marked complete or ready.
+
+The browser re-reads the saved startup before applying the draft. Existing populated
+fields, component lists, founder capital and selling price are preserved. Team salary
+totals feed the proposed payroll budget, and forecast units are bounded by proposed
+capacity when available. A failed Firestore save can be retried without rerunning
+the models. Navigating away or selecting Cancel aborts unfinished generation.
+Saving the generated plan remounts the editors so they display the new values;
+the next Copilot run indexes the saved draft and its assumption provenance.
+
+Until relevant inputs exist, the dashboard and financial visualizations show
+**Not estimated**, **Not planned** or **Not assessed**, instead of suggesting a
+zero BOM, 100% gross margin, or zero risk from an empty workspace.
+
+`npm run verify:planning` exercises real Ollama generation for a finished-watch import
+idea using temporary SQLite storage. It checks all thirteen sections, costs/capacity,
+stable IDs, preserved pricing/capital, payroll consistency and unreviewed statuses.
+It does not write to Firebase or the production vector database.
 
 These are separate inference invocations with separate system prompts and structured
 outputs, coordinated by `server/orchestrator.ts`. They are not separate OS processes
@@ -76,19 +133,18 @@ flowchart TD
 
 | Agent | Responsibility | Default model / setting |
 | --- | --- | --- |
-| Planning | Cross-module decisions and missing evidence | `qwen2.5:3b` / `MODEL_PLANNER` |
-| Product | Specifications, BOM, manufacturing and sourcing tradeoffs | `qwen2.5:3b` / `MODEL_PRODUCT` |
-| Finance | Interpret the deterministic financial calculations | `qwen2.5:3b` / `MODEL_FINANCE` |
-| Compliance | Review relevant government summaries and applicability gaps | `qwen2.5:3b` / `MODEL_COMPLIANCE` |
-| Team | Hiring sequence, responsibilities and payroll | `qwen2.5:3b` / `MODEL_TEAM` |
-| Scaling | Capacity, capital and evidence needed for stage gates | `qwen2.5:3b` / `MODEL_SCALING` |
-| Reviewer | Examine specialist findings, conflicts and evidence gaps | `llama3.2:3b` / `MODEL_REVIEWER` |
+| Planning | Cross-module decisions and missing evidence | `qwen3:8b` / `MODEL_PLANNER` |
+| Product | Specifications, BOM, manufacturing and sourcing tradeoffs | `qwen3:8b` / `MODEL_PRODUCT` |
+| Finance | Interpret the deterministic financial calculations | `qwen3:8b` / `MODEL_FINANCE` |
+| Compliance | Review relevant government summaries and applicability gaps | `qwen3:8b` / `MODEL_COMPLIANCE` |
+| Team | Hiring sequence, responsibilities and payroll | `qwen3:8b` / `MODEL_TEAM` |
+| Scaling | Capacity, capital and evidence needed for stage gates | `qwen3:8b` / `MODEL_SCALING` |
+| Reviewer | Examine specialist findings, conflicts and evidence gaps | `qwen3:8b` / `MODEL_REVIEWER` |
 
-The default uses **two generation models** and an embedding model. Specialist agents
-reuse the smaller model's weights while retaining separate instructions and contexts.
-Assign any installed compatible Ollama model to each setting for different weights.
-To reduce RAM further, the reviewer can use the same model as the specialists; this
-retains multiple agent contexts but removes model diversity.
+The default uses **one generation model** and a separate embedding model. Agents
+reuse `qwen3:8b` weights but retain separate instructions and contexts. Assign any
+installed compatible Ollama model to a role setting for different weights. The
+Reviewer remains a separate model invocation even when it shares the same weights.
 
 Automatic routing activates at most two specialists. For example, “team payroll
 budget” activates Finance and Team, then Reviewer. A selected module agent uses that
@@ -114,18 +170,25 @@ served by Vite. It contains private business data; protect it and any backups.
 
 The pipeline:
 
-1. Select business fields from the authenticated user's submitted saved workspace.
+1. Select business fields from the authenticated user's submitted saved workspace,
+   plus venture identity and deterministic calculation records.
    Conversation messages and previous agent reports are excluded from factual indexing.
-2. Split fields into chunks of up to 1,400 characters with 200-character overlap.
+2. Split fields into self-contained JSON chunks of up to 1,200 characters. Arrays such
+   as BOM and scaling stages are grouped only at item boundaries, so a chunk never
+   begins halfway through an ID, object or value.
 3. Embed only changed chunks in batches of at most 12 using `EMBEDDING_MODEL`
    (default `nomic-embed-text`). An embedding-model change rebuilds that scope's index.
 4. Store the successful snapshot transactionally and remove outdated chunks.
 5. Embed a focused question for each selected specialist and calculate exact cosine
    similarity over the allowed scope.
 6. Retrieve up to three startup chunks per specialist, or two when Compliance is
-   selected, plus three government chunks for Compliance. Deduplicate the combined
-   evidence and include a separate deterministic calculation record.
-7. Supply this bounded evidence to specialist models and the reviewer.
+   selected, plus three government chunks for Compliance. Add the indexed venture
+   identity and deterministic calculation records so product scope and arithmetic
+   remain explicit. Each specialist receives its own retrieved evidence; the
+   reviewer receives the deduplicated union and specialist findings.
+7. Send the question and this bounded evidence to Ollama. The full startup object is
+   never included in a model request. Qwen3 thinking output is disabled. Ollama JSON
+   mode is used, then the server validates the answer against a strict schema.
 
 Similarity scores express vector proximity, **not factual confidence**. This is exact
 vector search over a small corpus, not an approximate-nearest-neighbor index or a
@@ -193,8 +256,10 @@ applicability or automatically mark checklist items complete.
 
 Government coverage is limited to India and the bundled topics. Questions about
 other jurisdictions or absent sources require additional evidence. Neither agents
-nor retrieval eliminate hallucinations; unknown citation IDs and malformed output
-are rejected, but a valid ID alone cannot prove that a claim follows from its source.
+nor retrieval eliminate hallucinations. Unknown citation IDs trigger one correction
+attempt; if that also fails, that agent's claims and actions are withheld while the
+other agents continue. Malformed output still fails the run. A valid ID alone cannot
+prove that a claim follows from its source.
 
 ## Visual planning and Copilot interaction
 
@@ -223,8 +288,9 @@ are rejected, but a valid ID alone cannot prove that a claim follows from its so
 - **Agent placement:** general multi-agent work lives in Copilot; Compliance keeps one
   collapsed specialist review because source-grounded legal review is relevant there.
 
-New real workspaces start empty except for values explicitly supplied during creation.
-They no longer clone the laptop demo. On load, an exact legacy laptop-template signature
+New real workspaces first save only the values explicitly supplied during creation,
+then run the initial draft-generation workflow described above. They never clone the
+laptop demo. On load, an exact legacy laptop-template signature
 inside a non-laptop venture is removed from the in-memory workspace so it cannot enter
 RAG or agent requests; genuine laptop ventures and customized data are not matched.
 Every agent run also receives a non-optional `venture-scope` evidence record containing
@@ -234,11 +300,21 @@ unless the saved venture scope contains matching product or wireless terms.
 Copilot displays actual streamed progress events, specialist/model identities,
 reviewer concerns, retrieved evidence and action cards. There is **no artificial
 generation delay**. Cancellation propagates to the model requests. Failed runs stay
-failed; they do not produce a simulated success. Reports appear before background
+failed; they do not produce a simulated success. Missing Ollama or model files are
+reported by **Check models** and when a run is attempted. Reports appear before background
 Firestore saving, and a failed report save can be retried. “Add to roadmap” is an
-explicit write; other agent suggestions do not automatically change module data.
+explicit write; ordinary Copilot suggestions do not automatically change module data.
+The separate initial-planning workflow fills empty module fields after its reviewed
+draft completes, with the assumption metadata displayed throughout the workspace.
 Follow-up questions include a bounded excerpt of the currently displayed report as
 conversation context, explicitly not factual evidence or vector-index knowledge.
+
+Agent results use a priority-first visual dashboard: one blocking action is shown as
+“Do first,” the next actions form a compact execution ladder, later actions stay
+collapsed, and information gaps are separated from recommendations. The evidence map
+turns structured JSON into labeled fields and retrieval-match bars; cosine similarity
+is explicitly marked as retrieval relevance rather than confidence. Raw source text,
+agent handoffs and full analysis remain available through optional detail controls.
 
 ## Firebase and storage
 
@@ -271,13 +347,14 @@ key service. Reports use the existing per-user Firestore rules.
 Resource limits: one local run at a time, at most six starts per user/minute,
 350 KB request bodies, 256 startup chunks, bounded model output, 120-second model-call
 timeout and six-minute total request deadline. Model contexts are not persisted.
-Malformed model JSON and citations to unsupplied evidence IDs fail the run.
+Malformed model JSON fails the run. Citation repair adds a model call only when a
+specialist or reviewer cites an ID outside its retrieved evidence.
 
 Production requires a hosted Node/Ollama backend (Firebase static Hosting alone cannot
 run it), a same-origin `/api` reverse proxy, protected persistent storage, appropriate
 retention, and deployment-level monitoring/auth abuse controls. The local server binds
-to loopback intentionally. `VITE_AI_API_URL` belongs to the legacy gateway and does not
-configure the new `/api/agents/run` endpoint.
+to loopback intentionally. The old `VITE_AI_API_URL` gateway is no longer used;
+Copilot calls `/api/agents/run`.
 
 ## Commands and verification
 
@@ -297,9 +374,11 @@ npm run preview      # static production preview; requires separate API proxy fo
 
 Server tests use temporary databases and a controlled model stub, not downloaded LLM
 weights. They exercise persistence, scope isolation, incremental replacement, error
-handling, independent agent contexts and reviewer handoffs. Real model inference and
-Firebase-authenticated end-to-end testing require installed models and a signed-in
+handling, independent agent contexts and reviewer handoffs. Firebase-authenticated
+end-to-end testing requires installed models and a signed-in
 workspace. Model output quality requires separate evaluation with representative cases.
+A local in-memory smoke run with real `nomic-embed-text` and `qwen3:8b` completed a
+Product-agent → Reviewer handoff and correctly reported missing supplier evidence.
 
 Implementation references: [Ollama chat API](https://docs.ollama.com/api/chat),
 [embedding API](https://docs.ollama.com/api/embed), [Node SQLite](https://nodejs.org/api/sqlite.html),
@@ -309,5 +388,6 @@ and [jose token verification](https://github.com/panva/jose).
 
 Explore demo creates a private copy of the NovaEdge planning dataset. Sample prices,
 risks, compliance entries, scores and operating assumptions are illustrative data,
-not supplier quotes or verified feasibility findings. Legacy mock AI service methods
-remain for compatibility; the new agent workspace uses the server pipeline above.
+not supplier quotes or verified feasibility findings. The unused legacy mock AI and
+optional gateway services were removed. Copilot uses only the Ollama server pipeline,
+and old saved local-demo reports are excluded from its history.

@@ -115,7 +115,7 @@ export function CreateStartupPage() {
         sellingPrice,
         launchTimeline: `${launchDuration} ${launchUnit}`,
       }))
-      navigate(`/startup/${startupId}`)
+      navigate(`/startup/${startupId}?generate=1`)
     } catch {
       setError('Could not save your startup. Check your connection and try again.')
     } finally {

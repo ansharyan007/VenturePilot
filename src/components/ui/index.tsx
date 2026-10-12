@@ -6,7 +6,27 @@ export function Button({ className, variant = 'primary', loading, children, ...p
   const styles = { primary: 'btn-primary', secondary: 'btn-secondary', ghost: 'inline-flex items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100', danger: 'inline-flex items-center justify-center gap-2 rounded-xl bg-red-50 px-3 py-2 text-sm font-semibold text-red-700 hover:bg-red-100' }
   return <button className={clsx(styles[variant], className)} disabled={loading || props.disabled} {...props}>{loading && <LoaderCircle className="h-4 w-4 animate-spin" />}{children}</button>
 }
-export function Field({ label, hint, ...props }: InputHTMLAttributes<HTMLInputElement> & { label: string; hint?: string }) { return <label><span className="label">{label}</span><input className="input" {...props} />{hint && <span className="mt-1 block text-xs text-slate-500">{hint}</span>}</label> }
+function canonicalNumber(value: string) {
+  // Keep an empty field editable, but never pass a numeric value such as 0300
+  // back to a controlled input. This applies to every numeric Field in the app.
+  if (!value || !/^[-+]?\d/.test(value)) return value
+  const sign = value.startsWith('-') || value.startsWith('+') ? value.slice(0, 1) : ''
+  const digits = value.slice(sign.length)
+  return `${sign}${digits.replace(/^0+(?=\d)/, '')}`
+}
+
+export function Field({ label, hint, onChange, onBlur, ...props }: InputHTMLAttributes<HTMLInputElement> & { label: string; hint?: string }) {
+  const numeric = props.type === 'number'
+  const normalize = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (numeric) event.currentTarget.value = canonicalNumber(event.currentTarget.value)
+    onChange?.(event)
+  }
+  const normalizeOnBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    if (numeric) event.currentTarget.value = canonicalNumber(event.currentTarget.value)
+    onBlur?.(event)
+  }
+  return <label><span className="label">{label}</span><input className="input" {...props} onChange={normalize} onBlur={normalizeOnBlur} />{hint && <span className="mt-1 block text-xs text-slate-500">{hint}</span>}</label>
+}
 export function Textarea({ label, ...props }: TextareaHTMLAttributes<HTMLTextAreaElement> & { label: string }) { return <label><span className="label">{label}</span><textarea className="input min-h-24 resize-y" {...props} /></label> }
 export function Select({ label, children, ...props }: SelectHTMLAttributes<HTMLSelectElement> & { label: string; children: ReactNode }) { return <label><span className="label">{label}</span><select className="input" {...props}>{children}</select></label> }
 export function Badge({ children, tone = 'neutral' }: { children: ReactNode; tone?: 'neutral' | 'green' | 'amber' | 'red' | 'blue' }) { const map = { neutral: 'bg-slate-100 text-slate-600', green: 'bg-emerald-50 text-emerald-700', amber: 'bg-amber-50 text-amber-700', red: 'bg-red-50 text-red-700', blue: 'bg-blue-50 text-blue-700' }; return <span className={clsx('inline-flex rounded-full px-2.5 py-1 text-xs font-semibold', map[tone])}>{children}</span> }

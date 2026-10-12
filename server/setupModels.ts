@@ -19,9 +19,27 @@ if (!await reachable()) {
 const models = new Set([embeddingModel(), ...Object.keys(roles).map(role => modelFor(role as AgentRole))])
 for (const model of models) {
   console.log(`Installing/verifying ${model}…`)
-  const response = await fetch(`${base}/api/pull`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model, stream: false }), signal: AbortSignal.timeout(1800000) })
-  const result = await response.json() as { status?: string; error?: string }
-  if (!response.ok || result.error || result.status !== 'success') throw new Error(result.error || `Could not pull ${model}`)
+  const response = await fetch(`${base}/api/pull`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model, stream: true }), signal: AbortSignal.timeout(7200000) })
+  if (!response.ok || !response.body) throw new Error(`Could not start pull for ${model}: HTTP ${response.status}`)
+  const decoder = new TextDecoder()
+  let buffer = '', ready = false, lastPercent = -1
+  const accept = (line: string) => {
+    if (!line.trim()) return
+    const update = JSON.parse(line) as { status?: string; error?: string; total?: number; completed?: number }
+    if (update.error) throw new Error(`Could not pull ${model}: ${update.error}`)
+    if (update.status === 'success') ready = true
+    if (update.total && update.completed !== undefined) {
+      const percent = Math.floor(100 * update.completed / update.total / 10) * 10
+      if (percent > lastPercent) { console.log(`${model}: ${percent}% downloaded`); lastPercent = percent }
+    }
+  }
+  for await (const chunk of response.body) {
+    buffer += decoder.decode(chunk, { stream: true })
+    let newline: number
+    while ((newline = buffer.indexOf('\n')) >= 0) { accept(buffer.slice(0, newline)); buffer = buffer.slice(newline + 1) }
+  }
+  accept(buffer + decoder.decode())
+  if (!ready) throw new Error(`Pull for ${model} ended without confirmation from Ollama.`)
   console.log(`${model}: ready`)
 }
 console.log('All configured models are installed. Start npm run dev:full and sign in to run agents.')
