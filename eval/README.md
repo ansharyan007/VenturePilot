@@ -55,3 +55,8 @@ The final pre-run correction uses alternative spellings for Wi-Fi, e-commerce,
 and e-waste; uses bounded CEO/CTO checks; and makes slash spacing equivalent.
 It also turns heldout-11's phrase checks into evidence-backed stems and accepts
 common 14-inch screen-size renderings. No model had been run.
+
+The last pre-run correction adds portable Wi-Fi and certificate-denial
+alternatives plus a standalone predicate implementation and 17-case test
+harness. Run it with `node eval/run-predicates-tests.mjs`. No model had been
+run.

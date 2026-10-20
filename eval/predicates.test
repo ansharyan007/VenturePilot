@@ -1,0 +1,35 @@
+import assert from 'node:assert/strict'
+import { readFile } from 'node:fs/promises'
+import { normalize, passes, score } from './predicates.mjs'
+
+const dev = JSON.parse(await readFile(new URL('./questions.dev.json', import.meta.url)))
+const heldout = JSON.parse(await readFile(new URL('./questions.heldout.json', import.meta.url)))
+const question = (set, id) => set.find(item => item.id === id)
+const predicate = (set, id, index) => question(set, id).predicates[index]
+const tests = [
+  ['normalizes commas and currency', () => assert.equal(normalize('₹1,659'), '1659')],
+  ['normalizes dashes', () => assert.equal(normalize('end-of-line'), 'end of line')],
+  ['normalizes curly apostrophes', () => assert.equal(normalize('isn’t'), "isn't")],
+  ['normalizes slash spaces', () => assert.equal(normalize('Product / CTO'), 'product/cto')],
+  ['dev-04 accepts 1,659 units', () => assert.equal(passes('1,659 units', predicate(dev, 'dev-04', 0)), true)],
+  ['dev-04 accepts 1658 units', () => assert.equal(passes('1658 units', predicate(dev, 'dev-04', 0)), true)],
+  ['heldout-12 accepts certificate denial', () => assert.equal(passes('no certificate number was issued', predicate(heldout, 'heldout-12', 1)), true)],
+  ['word boundary prevents 130 matching 1300', () => assert.equal(passes('1300', predicate(dev, 'dev-01', 2)), false)],
+  ['word boundary accepts 130', () => assert.equal(passes('130', predicate(dev, 'dev-01', 2)), true)],
+  ['dev-06 accepts dual sourcing', () => assert.equal(passes('Use dual sourcing.', predicate(dev, 'dev-06', 1)), true)],
+  ['heldout-02 accepts WiFi 6', () => assert.equal(passes('WiFi 6', predicate(heldout, 'heldout-02', 2)), true)],
+  ['dev-05 accepts Product/CTO', () => assert.equal(passes('Product/CTO', predicate(dev, 'dev-05', 1)), true)],
+  ['dev-05 accepts CEO', () => assert.equal(passes('CEO', predicate(dev, 'dev-05', 0)), true)],
+  ['heldout-10 accepts 7.5 million', () => assert.equal(passes('7.5 million', predicate(heldout, 'heldout-10', 0)), true)],
+  ['forbid passes when absent', () => assert.equal(passes('safe answer', { type: 'forbid', pattern: 'invented' }), true)],
+  ['forbid fails when present', () => assert.equal(passes('invented answer', { type: 'forbid', pattern: 'invented' }), false)],
+  ['score counts all predicate results', () => assert.deepEqual(score('CEO and Product/CTO', question(dev, 'dev-05').predicates), { passed: 2, total: 2, results: [true, true] })],
+]
+
+let failures = 0
+for (const [name, test] of tests) {
+  try { test(); console.log(`PASS ${name}`) }
+  catch (error) { failures++; console.error(`FAIL ${name}: ${error.message}`) }
+}
+console.log(`\n${tests.length - failures}/${tests.length} predicate tests passed`)
+if (failures) process.exitCode = 1
