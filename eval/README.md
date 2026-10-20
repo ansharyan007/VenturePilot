@@ -2,10 +2,13 @@
 
 `questions.dev.json` and `questions.heldout.json` were written before any model
 evaluation. Each has twelve distinct questions, covers the listed planning
-topics, and includes one false-premise question. Predicates are literal checks
-against a normalized answer: lowercase text with Markdown punctuation, commas,
-and currency symbols removed. A `require` predicate must be present; a
-`forbid` predicate must be absent. These rule checks are not a measure of
+topics, and includes one false-premise question. Predicates are regular
+expression checks against normalized answer and pattern text: lowercase;
+replace hyphens, en/em dashes, and non-breaking hyphens with spaces; replace
+curly apostrophes with straight apostrophes; strip Markdown, thousands commas,
+and currency symbols; then collapse whitespace. A `require` predicate must
+match, `require_any` passes when at least one supplied pattern matches, and a
+`forbid` predicate must not match. These rule checks are not a measure of
 semantic correctness.
 
 Numeric predicates are taken from the saved fixture and deterministic output of
@@ -37,3 +40,13 @@ expressions. Question-echoing or common-word predicates were replaced with
 stored evidence terms, and `require_any` accepts documented equivalent wording
 for mitigation and false-premise denials. Gold evidence IDs were retained:
 each corrected predicate is supported by its previously annotated chunk.
+
+The second pre-run correction removed the unasked theoretical-capacity check,
+made hyphen normalization explicit, strengthened numeric and supplier checks,
+reworded the team item to test its recorded salary, and replaced heldout-11
+with a market question using `s-analysis-0`. It also replaced verbatim phrases
+with distinctive stems or alternatives. `s-scaling-0` records the first two
+stage names as “Prototype” and “Small batch”; heldout-07 therefore checks
+those names. The dev-05 exclusion was removed: Hardware engineer is stored at
+the Prototype stage, but a correct answer need not mention it. No model had
+been run.
