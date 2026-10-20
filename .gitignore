@@ -1,7 +1,9 @@
 node_modules
 dist
-.env
-.env.local
+.env*
+.DS_Store
+*.sqlite
+*.db
 *.log
 *.tsbuildinfo
 vite.config.*.mjs
@@ -9,3 +11,4 @@ vite.config.*.mjs
 server/.env
 server/data/
 server/.runtime/
+!.env.example
