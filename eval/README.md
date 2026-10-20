@@ -29,6 +29,31 @@ Phase 3 will evaluate direct, RAG, and full-pipeline modes with these files
 unchanged. Results will report macro predicate pass rate, evidence recall for
 retrieval modes, and whole-pipeline latency.
 
+## Running the evaluation
+
+The runner uses the app's model settings for direct and RAG and invokes the
+existing `runAgents()` pipeline for full mode. A two-question sample (one
+repeat) prints each raw final answer, predicate score, evidence IDs, and
+latency:
+
+```sh
+node --import tsx eval/run_eval.ts --set all --sample 2 --seed 20261014
+```
+
+For the full 216-run evaluation, resume safely after an interruption:
+
+```sh
+node --import tsx eval/run_eval.ts --set all --repeats 3 --seed 20261014 --resume
+```
+
+Each completed result is appended and fsynced to `results/raw.jsonl`, keyed as
+`set|question|mode|repeat`; `--resume` skips existing keys, including failed
+runs. Every record contains the fixed seed plus Ollama and model version
+metadata. RAG timing starts before query embedding and ends after its answer;
+the static document index is built once before timed runs and excluded. Full
+mode timing covers the complete application pipeline, including index sync,
+retrieval, specialists, review, and guardrails.
+
 ## Corrections before the first run
 
 No model had been run when these corrections were made. The false-premise
