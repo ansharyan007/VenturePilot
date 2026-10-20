@@ -380,6 +380,59 @@ workspace. Model output quality requires separate evaluation with representative
 A local in-memory smoke run with real `nomic-embed-text` and `qwen3:8b` completed a
 Product-agent → Reviewer handoff and correctly reported missing supplier evidence.
 
+## Reproducing the paper
+
+Use Node.js **22.13 or later**, Ollama, and the locally installed models
+`qwen3:8b` and `nomic-embed-text`. The application commands are listed above;
+install dependencies with `npm install`, start the complete local application with
+`npm run dev:full`, and run the deterministic demo fixture check with:
+
+```bash
+python3 src/demo_check.py
+```
+
+The frozen predicate implementation and question fixtures are tested without a
+model call:
+
+```bash
+node eval/run-predicates-tests.mjs
+```
+
+To run the local-model evaluation, first use the two-question sample and inspect
+the printed answers, scores, evidence IDs, and latency. It requires a reachable
+local Ollama service and appends results to `eval/results/raw.jsonl`:
+
+```bash
+node --import tsx eval/run_eval.ts --set all --sample 2 --seed 20261014
+```
+
+The complete experiment has 24 frozen questions, three modes, and three repeats
+(216 runs). It is resumable and must use the same settings on restart:
+
+```bash
+node --import tsx eval/run_eval.ts --set all --repeats 3 --seed 20261014 --resume
+node eval/summarize.mjs
+```
+
+The summarizer re-scores `raw.jsonl` with the frozen predicates and writes
+`summary.json`, `summary.md`, and the CSV inputs for the paper figures. RAG's static
+document index is built once before timed runs and excluded from its latency; query
+embedding and retrieval are timed. Full-pipeline timing includes the application
+index synchronization, retrieval, specialist calls, reviewer, and guardrails.
+
+Version map: commit `7231d3a` is the system described in paper Sections 3–7 and the
+code audit; tag `eval-frozen-final` identifies the frozen questions; repository HEAD
+is the revision evaluated. The original 14 October 2026 evaluation files were lost,
+so this evaluation was rebuilt and rerun; its numbers therefore differ from earlier
+drafts. Results are a small local-model evaluation on the illustrative NovaEdge
+venture, rule checks are not semantic correctness, latency is hardware- and
+load-dependent, and four recorded full-pipeline runs timed out rather than being
+silently replaced.
+
+All code was written jointly by Aniket Raj, Ankit Raj, and Ansh Aryan. Commits were
+pushed from the `ansharyan007` account. `TECHNICAL_ANALYSIS.md` is a dated analysis
+of an earlier setup and is not part of the evaluation.
+
 Implementation references: [Ollama chat API](https://docs.ollama.com/api/chat),
 [embedding API](https://docs.ollama.com/api/embed), [Node SQLite](https://nodejs.org/api/sqlite.html),
 and [jose token verification](https://github.com/panva/jose).

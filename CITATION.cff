@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "BuildMyIdea: An Electronics Venture Planning and AI-Assisted Decision Support Platform"
+type: software
+authors:
+  - family-names: Raj
+    given-names: Aniket
+    affiliation: "Vellore Institute of Technology (VIT), Chennai, India"
+  - family-names: Raj
+    given-names: Ankit
+    affiliation: "Vellore Institute of Technology (VIT), Chennai, India"
+  - family-names: Aryan
+    given-names: Ansh
+    affiliation: "Vellore Institute of Technology (VIT), Chennai, India"
+  - family-names: Rani
+    given-names: Shola Usha
+    affiliation: "Vellore Institute of Technology (VIT), Chennai, India"
+repository-code: "https://github.com/ansharyan007/VenturePilot"
