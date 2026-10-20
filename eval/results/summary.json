@@ -1,0 +1,2008 @@
+{
+  "generated_at": "2026-10-20T15:52:08.046Z",
+  "source": "eval/results/raw.jsonl",
+  "bootstrap": {
+    "seed": 20261014,
+    "resamples": 10000,
+    "unit": "question"
+  },
+  "records": 216,
+  "score_mismatches": [],
+  "sets": {
+    "dev": {
+      "modes": {
+        "direct": {
+          "runs": 36,
+          "questions_observed": 12,
+          "pass_rate": {
+            "macro_mean": 0.837963,
+            "sd_across_repeats": 0.008019,
+            "repeat_macro_means": [
+              0.847222,
+              0.833333,
+              0.833333
+            ],
+            "bootstrap_95_ci": [
+              0.62963,
+              1
+            ]
+          },
+          "pooled_passes": {
+            "passed": 88,
+            "total": 105,
+            "rate": 0.838095
+          },
+          "questions_passing_every_check": {
+            "per_repeat": [
+              {
+                "repeat": 1,
+                "passed": 9,
+                "out_of": 12,
+                "observed": 12
+              },
+              {
+                "repeat": 2,
+                "passed": 10,
+                "out_of": 12,
+                "observed": 12
+              },
+              {
+                "repeat": 3,
+                "passed": 10,
+                "out_of": 12,
+                "observed": 12
+              }
+            ],
+            "any_repeat": {
+              "passed": 10,
+              "out_of": 12,
+              "observed": 12
+            }
+          },
+          "evidence_recall": {
+            "value": null,
+            "note": "undefined for direct (no retrieved evidence)"
+          },
+          "latency_seconds": {
+            "mean": 142.302972,
+            "median": 111.2055,
+            "p95": 190.631,
+            "per_question_min_max": {
+              "dev|dev-11": {
+                "min_s": 92.705,
+                "max_s": 97.191
+              },
+              "dev|dev-06": {
+                "min_s": 104.18,
+                "max_s": 110.149
+              },
+              "dev|dev-05": {
+                "min_s": 96.614,
+                "max_s": 919.886
+              },
+              "dev|dev-08": {
+                "min_s": 91.961,
+                "max_s": 100.094
+              },
+              "dev|dev-09": {
+                "min_s": 111.808,
+                "max_s": 186.898
+              },
+              "dev|dev-03": {
+                "min_s": 99.679,
+                "max_s": 142.813
+              },
+              "dev|dev-10": {
+                "min_s": 88.752,
+                "max_s": 157.829
+              },
+              "dev|dev-12": {
+                "min_s": 103.617,
+                "max_s": 113.513
+              },
+              "dev|dev-02": {
+                "min_s": 112.084,
+                "max_s": 113.758
+              },
+              "dev|dev-01": {
+                "min_s": 162.703,
+                "max_s": 183.41
+              },
+              "dev|dev-07": {
+                "min_s": 104.113,
+                "max_s": 113.933
+              },
+              "dev|dev-04": {
+                "min_s": 117.069,
+                "max_s": 201.83
+              }
+            }
+          },
+          "most_failed_predicates": [
+            {
+              "question_id": "dev-01",
+              "predicate_index": 1,
+              "predicate": {
+                "type": "require",
+                "pattern": "\\b34550\\b"
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "dev-01",
+              "predicate_index": 2,
+              "predicate": {
+                "type": "require",
+                "pattern": "\\b217500\\b"
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "dev-01",
+              "predicate_index": 3,
+              "predicate": {
+                "type": "require",
+                "pattern": "\\b130\\b"
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "dev-07",
+              "predicate_index": 3,
+              "predicate": {
+                "type": "require_any",
+                "patterns": [
+                  "direct pilot",
+                  "expand channels"
+                ]
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "dev-07",
+              "predicate_index": 1,
+              "predicate": {
+                "type": "require_any",
+                "patterns": [
+                  "milestone link",
+                  "milestone based"
+                ]
+              },
+              "failed_runs": 2,
+              "total_runs": 3
+            }
+          ],
+          "failed_runs": 0,
+          "thinking_chars_positive_runs": 0
+        },
+        "rag": {
+          "runs": 36,
+          "questions_observed": 12,
+          "pass_rate": {
+            "macro_mean": 0.590278,
+            "sd_across_repeats": 0.024056,
+            "repeat_macro_means": [
+              0.618056,
+              0.576389,
+              0.576389
+            ],
+            "bootstrap_95_ci": [
+              0.347222,
+              0.819444
+            ]
+          },
+          "pooled_passes": {
+            "passed": 61,
+            "total": 105,
+            "rate": 0.580952
+          },
+          "questions_passing_every_check": {
+            "per_repeat": [
+              {
+                "repeat": 1,
+                "passed": 6,
+                "out_of": 12,
+                "observed": 12
+              },
+              {
+                "repeat": 2,
+                "passed": 6,
+                "out_of": 12,
+                "observed": 12
+              },
+              {
+                "repeat": 3,
+                "passed": 6,
+                "out_of": 12,
+                "observed": 12
+              }
+            ],
+            "any_repeat": {
+              "passed": 6,
+              "out_of": 12,
+              "observed": 12
+            }
+          },
+          "evidence_recall": {
+            "value": 0.576389,
+            "note": null
+          },
+          "latency_seconds": {
+            "mean": 15.872139,
+            "median": 14.3935,
+            "p95": 35.07475,
+            "per_question_min_max": {
+              "dev|dev-08": {
+                "min_s": 9.442,
+                "max_s": 15.535
+              },
+              "dev|dev-05": {
+                "min_s": 8.99,
+                "max_s": 9.107
+              },
+              "dev|dev-12": {
+                "min_s": 16.878,
+                "max_s": 28.917
+              },
+              "dev|dev-11": {
+                "min_s": 13.335,
+                "max_s": 31.785
+              },
+              "dev|dev-02": {
+                "min_s": 11.957,
+                "max_s": 18.562
+              },
+              "dev|dev-04": {
+                "min_s": 14.37,
+                "max_s": 14.747
+              },
+              "dev|dev-10": {
+                "min_s": 6.061,
+                "max_s": 6.179
+              },
+              "dev|dev-09": {
+                "min_s": 15.85,
+                "max_s": 16.324
+              },
+              "dev|dev-06": {
+                "min_s": 30.814,
+                "max_s": 45.395
+              },
+              "dev|dev-07": {
+                "min_s": 7.804,
+                "max_s": 8.423
+              },
+              "dev|dev-01": {
+                "min_s": 7.28,
+                "max_s": 7.693
+              },
+              "dev|dev-03": {
+                "min_s": 19.722,
+                "max_s": 20.47
+              }
+            }
+          },
+          "most_failed_predicates": [
+            {
+              "question_id": "dev-01",
+              "predicate_index": 1,
+              "predicate": {
+                "type": "require",
+                "pattern": "\\b34550\\b"
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "dev-01",
+              "predicate_index": 2,
+              "predicate": {
+                "type": "require",
+                "pattern": "\\b217500\\b"
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "dev-01",
+              "predicate_index": 3,
+              "predicate": {
+                "type": "require",
+                "pattern": "\\b130\\b"
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "dev-02",
+              "predicate_index": 2,
+              "predicate": {
+                "type": "require",
+                "pattern": "16\\s*gb"
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "dev-02",
+              "predicate_index": 3,
+              "predicate": {
+                "type": "require",
+                "pattern": "512\\s*gb"
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            }
+          ],
+          "failed_runs": 0,
+          "thinking_chars_positive_runs": 0
+        },
+        "full": {
+          "runs": 36,
+          "questions_observed": 12,
+          "pass_rate": {
+            "macro_mean": 0.49537,
+            "sd_across_repeats": 0.070933,
+            "repeat_macro_means": [
+              0.465278,
+              0.576389,
+              0.444444
+            ],
+            "bootstrap_95_ci": [
+              0.25463,
+              0.740741
+            ]
+          },
+          "pooled_passes": {
+            "passed": 48,
+            "total": 105,
+            "rate": 0.457143
+          },
+          "questions_passing_every_check": {
+            "per_repeat": [
+              {
+                "repeat": 1,
+                "passed": 5,
+                "out_of": 12,
+                "observed": 12
+              },
+              {
+                "repeat": 2,
+                "passed": 6,
+                "out_of": 12,
+                "observed": 12
+              },
+              {
+                "repeat": 3,
+                "passed": 5,
+                "out_of": 12,
+                "observed": 12
+              }
+            ],
+            "any_repeat": {
+              "passed": 6,
+              "out_of": 12,
+              "observed": 12
+            }
+          },
+          "evidence_recall": {
+            "value": 0.412037,
+            "note": null
+          },
+          "latency_seconds": {
+            "mean": 123.54925,
+            "median": 96.25,
+            "p95": 268.027,
+            "per_question_min_max": {
+              "dev|dev-05": {
+                "min_s": 84.973,
+                "max_s": 99.329
+              },
+              "dev|dev-03": {
+                "min_s": 104.757,
+                "max_s": 124.338
+              },
+              "dev|dev-08": {
+                "min_s": 90.245,
+                "max_s": 359.866
+              },
+              "dev|dev-09": {
+                "min_s": 119.258,
+                "max_s": 211.6
+              },
+              "dev|dev-07": {
+                "min_s": 88.063,
+                "max_s": 379.949
+              },
+              "dev|dev-12": {
+                "min_s": 76.546,
+                "max_s": 85.03
+              },
+              "dev|dev-10": {
+                "min_s": 78.089,
+                "max_s": 84.762
+              },
+              "dev|dev-01": {
+                "min_s": 95.367,
+                "max_s": 101.332
+              },
+              "dev|dev-02": {
+                "min_s": 94.675,
+                "max_s": 97.047
+              },
+              "dev|dev-06": {
+                "min_s": 88.35,
+                "max_s": 95.762
+              },
+              "dev|dev-11": {
+                "min_s": 87.746,
+                "max_s": 92.337
+              },
+              "dev|dev-04": {
+                "min_s": 142.823,
+                "max_s": 199.515
+              }
+            }
+          },
+          "most_failed_predicates": [
+            {
+              "question_id": "dev-02",
+              "predicate_index": 1,
+              "predicate": {
+                "type": "require",
+                "pattern": "14\\s*(inch|in\\b|\\x22)"
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "dev-02",
+              "predicate_index": 2,
+              "predicate": {
+                "type": "require",
+                "pattern": "16\\s*gb"
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "dev-02",
+              "predicate_index": 3,
+              "predicate": {
+                "type": "require",
+                "pattern": "512\\s*gb"
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "dev-06",
+              "predicate_index": 1,
+              "predicate": {
+                "type": "require",
+                "pattern": "margin eros"
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "dev-06",
+              "predicate_index": 2,
+              "predicate": {
+                "type": "require_any",
+                "patterns": [
+                  "dual sourc",
+                  "second sourc"
+                ]
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            }
+          ],
+          "failed_runs": 4,
+          "thinking_chars_positive_runs": 0
+        }
+      },
+      "false_premise": {
+        "direct": [
+          {
+            "question_id": "dev-12",
+            "repeat": 1,
+            "pass": true,
+            "passed": 2,
+            "total": 2
+          },
+          {
+            "question_id": "dev-12",
+            "repeat": 3,
+            "pass": true,
+            "passed": 2,
+            "total": 2
+          },
+          {
+            "question_id": "dev-12",
+            "repeat": 2,
+            "pass": true,
+            "passed": 2,
+            "total": 2
+          }
+        ],
+        "rag": [
+          {
+            "question_id": "dev-12",
+            "repeat": 2,
+            "pass": false,
+            "passed": 0,
+            "total": 2
+          },
+          {
+            "question_id": "dev-12",
+            "repeat": 3,
+            "pass": false,
+            "passed": 0,
+            "total": 2
+          },
+          {
+            "question_id": "dev-12",
+            "repeat": 1,
+            "pass": false,
+            "passed": 1,
+            "total": 2
+          }
+        ],
+        "full": [
+          {
+            "question_id": "dev-12",
+            "repeat": 2,
+            "pass": true,
+            "passed": 2,
+            "total": 2
+          },
+          {
+            "question_id": "dev-12",
+            "repeat": 3,
+            "pass": true,
+            "passed": 2,
+            "total": 2
+          },
+          {
+            "question_id": "dev-12",
+            "repeat": 1,
+            "pass": true,
+            "passed": 2,
+            "total": 2
+          }
+        ]
+      },
+      "paired_comparisons": [
+        {
+          "comparison": "full minus rag",
+          "questions_observed": 12,
+          "mean_difference": -0.094907,
+          "bootstrap_95_ci": [
+            -0.351852,
+            0.159722
+          ]
+        },
+        {
+          "comparison": "full minus direct",
+          "questions_observed": 12,
+          "mean_difference": -0.342593,
+          "bootstrap_95_ci": [
+            -0.611111,
+            -0.083333
+          ]
+        }
+      ]
+    },
+    "heldout": {
+      "modes": {
+        "direct": {
+          "runs": 36,
+          "questions_observed": 12,
+          "pass_rate": {
+            "macro_mean": 0.87963,
+            "sd_across_repeats": 0.016038,
+            "repeat_macro_means": [
+              0.888889,
+              0.888889,
+              0.861111
+            ],
+            "bootstrap_95_ci": [
+              0.703704,
+              1
+            ]
+          },
+          "pooled_passes": {
+            "passed": 86,
+            "total": 96,
+            "rate": 0.895833
+          },
+          "questions_passing_every_check": {
+            "per_repeat": [
+              {
+                "repeat": 1,
+                "passed": 10,
+                "out_of": 12,
+                "observed": 12
+              },
+              {
+                "repeat": 2,
+                "passed": 10,
+                "out_of": 12,
+                "observed": 12
+              },
+              {
+                "repeat": 3,
+                "passed": 9,
+                "out_of": 12,
+                "observed": 12
+              }
+            ],
+            "any_repeat": {
+              "passed": 10,
+              "out_of": 12,
+              "observed": 12
+            }
+          },
+          "evidence_recall": {
+            "value": null,
+            "note": "undefined for direct (no retrieved evidence)"
+          },
+          "latency_seconds": {
+            "mean": 108.894778,
+            "median": 102.0755,
+            "p95": 147.603,
+            "per_question_min_max": {
+              "heldout|heldout-11": {
+                "min_s": 100.174,
+                "max_s": 101.33
+              },
+              "heldout|heldout-02": {
+                "min_s": 112.534,
+                "max_s": 126.157
+              },
+              "heldout|heldout-01": {
+                "min_s": 88.487,
+                "max_s": 139.369
+              },
+              "heldout|heldout-03": {
+                "min_s": 88.549,
+                "max_s": 124.563
+              },
+              "heldout|heldout-09": {
+                "min_s": 102.821,
+                "max_s": 134.653
+              },
+              "heldout|heldout-06": {
+                "min_s": 109.016,
+                "max_s": 118.244
+              },
+              "heldout|heldout-10": {
+                "min_s": 87.917,
+                "max_s": 96.207
+              },
+              "heldout|heldout-08": {
+                "min_s": 99.591,
+                "max_s": 107.948
+              },
+              "heldout|heldout-04": {
+                "min_s": 111.724,
+                "max_s": 114.756
+              },
+              "heldout|heldout-07": {
+                "min_s": 99.887,
+                "max_s": 175.176
+              },
+              "heldout|heldout-05": {
+                "min_s": 98.749,
+                "max_s": 172.305
+              },
+              "heldout|heldout-12": {
+                "min_s": 90.044,
+                "max_s": 93.92
+              }
+            }
+          },
+          "most_failed_predicates": [
+            {
+              "question_id": "heldout-10",
+              "predicate_index": 3,
+              "predicate": {
+                "type": "require",
+                "pattern": "india"
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "heldout-12",
+              "predicate_index": 1,
+              "predicate": {
+                "type": "require_any",
+                "patterns": [
+                  "not started",
+                  "not yet started",
+                  "has not started",
+                  "hasn.t started"
+                ]
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "heldout-12",
+              "predicate_index": 2,
+              "predicate": {
+                "type": "require_any",
+                "patterns": [
+                  "no certificate number",
+                  "no certificate was issued",
+                  "does not provide a certificate number",
+                  "no certificate",
+                  "not been issued",
+                  "not issued",
+                  "cannot provide"
+                ]
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "heldout-02",
+              "predicate_index": 3,
+              "predicate": {
+                "type": "require_any",
+                "patterns": [
+                  "wi fi 6",
+                  "wifi 6"
+                ]
+              },
+              "failed_runs": 1,
+              "total_runs": 3
+            }
+          ],
+          "failed_runs": 0,
+          "thinking_chars_positive_runs": 0
+        },
+        "rag": {
+          "runs": 36,
+          "questions_observed": 12,
+          "pass_rate": {
+            "macro_mean": 0.472222,
+            "sd_across_repeats": 0,
+            "repeat_macro_means": [
+              0.472222,
+              0.472222,
+              0.472222
+            ],
+            "bootstrap_95_ci": [
+              0.222222,
+              0.75
+            ]
+          },
+          "pooled_passes": {
+            "passed": 45,
+            "total": 96,
+            "rate": 0.46875
+          },
+          "questions_passing_every_check": {
+            "per_repeat": [
+              {
+                "repeat": 1,
+                "passed": 5,
+                "out_of": 12,
+                "observed": 12
+              },
+              {
+                "repeat": 2,
+                "passed": 5,
+                "out_of": 12,
+                "observed": 12
+              },
+              {
+                "repeat": 3,
+                "passed": 5,
+                "out_of": 12,
+                "observed": 12
+              }
+            ],
+            "any_repeat": {
+              "passed": 5,
+              "out_of": 12,
+              "observed": 12
+            }
+          },
+          "evidence_recall": {
+            "value": 0.5,
+            "note": null
+          },
+          "latency_seconds": {
+            "mean": 15.530194,
+            "median": 14.233,
+            "p95": 25.13975,
+            "per_question_min_max": {
+              "heldout|heldout-02": {
+                "min_s": 9.326,
+                "max_s": 10.895
+              },
+              "heldout|heldout-04": {
+                "min_s": 17.073,
+                "max_s": 21.52
+              },
+              "heldout|heldout-12": {
+                "min_s": 13.275,
+                "max_s": 15.934
+              },
+              "heldout|heldout-07": {
+                "min_s": 9.356,
+                "max_s": 10.308
+              },
+              "heldout|heldout-08": {
+                "min_s": 16.134,
+                "max_s": 25.37
+              },
+              "heldout|heldout-05": {
+                "min_s": 12.9,
+                "max_s": 13.495
+              },
+              "heldout|heldout-01": {
+                "min_s": 14.029,
+                "max_s": 25.063
+              },
+              "heldout|heldout-09": {
+                "min_s": 20.6,
+                "max_s": 21.099
+              },
+              "heldout|heldout-11": {
+                "min_s": 13.818,
+                "max_s": 14.893
+              },
+              "heldout|heldout-10": {
+                "min_s": 12.314,
+                "max_s": 15.039
+              },
+              "heldout|heldout-03": {
+                "min_s": 15.05,
+                "max_s": 26.037
+              },
+              "heldout|heldout-06": {
+                "min_s": 13.679,
+                "max_s": 21.081
+              }
+            }
+          },
+          "most_failed_predicates": [
+            {
+              "question_id": "heldout-02",
+              "predicate_index": 1,
+              "predicate": {
+                "type": "require",
+                "pattern": "replaceable ssd"
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "heldout-02",
+              "predicate_index": 2,
+              "predicate": {
+                "type": "require",
+                "pattern": "serviceable battery"
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "heldout-02",
+              "predicate_index": 3,
+              "predicate": {
+                "type": "require_any",
+                "patterns": [
+                  "wi fi 6",
+                  "wifi 6"
+                ]
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "heldout-03",
+              "predicate_index": 1,
+              "predicate": {
+                "type": "require",
+                "pattern": "\\bodm\\b"
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "heldout-03",
+              "predicate_index": 2,
+              "predicate": {
+                "type": "require",
+                "pattern": "authori[sz]ed distributor"
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            }
+          ],
+          "failed_runs": 0,
+          "thinking_chars_positive_runs": 0
+        },
+        "full": {
+          "runs": 36,
+          "questions_observed": 12,
+          "pass_rate": {
+            "macro_mean": 0.435185,
+            "sd_across_repeats": 0.032075,
+            "repeat_macro_means": [
+              0.472222,
+              0.416667,
+              0.416667
+            ],
+            "bootstrap_95_ci": [
+              0.175926,
+              0.685417
+            ]
+          },
+          "pooled_passes": {
+            "passed": 41,
+            "total": 96,
+            "rate": 0.427083
+          },
+          "questions_passing_every_check": {
+            "per_repeat": [
+              {
+                "repeat": 1,
+                "passed": 5,
+                "out_of": 12,
+                "observed": 12
+              },
+              {
+                "repeat": 2,
+                "passed": 4,
+                "out_of": 12,
+                "observed": 12
+              },
+              {
+                "repeat": 3,
+                "passed": 4,
+                "out_of": 12,
+                "observed": 12
+              }
+            ],
+            "any_repeat": {
+              "passed": 5,
+              "out_of": 12,
+              "observed": 12
+            }
+          },
+          "evidence_recall": {
+            "value": 0.541667,
+            "note": null
+          },
+          "latency_seconds": {
+            "mean": 109.785722,
+            "median": 100.03,
+            "p95": 159.0075,
+            "per_question_min_max": {
+              "heldout|heldout-11": {
+                "min_s": 91.046,
+                "max_s": 122.876
+              },
+              "heldout|heldout-09": {
+                "min_s": 148.595,
+                "max_s": 216.512
+              },
+              "heldout|heldout-02": {
+                "min_s": 93.763,
+                "max_s": 137.265
+              },
+              "heldout|heldout-10": {
+                "min_s": 77.744,
+                "max_s": 92.511
+              },
+              "heldout|heldout-04": {
+                "min_s": 104.887,
+                "max_s": 130.144
+              },
+              "heldout|heldout-03": {
+                "min_s": 86.938,
+                "max_s": 139.887
+              },
+              "heldout|heldout-12": {
+                "min_s": 142.192,
+                "max_s": 169.326
+              },
+              "heldout|heldout-06": {
+                "min_s": 113.325,
+                "max_s": 139.577
+              },
+              "heldout|heldout-08": {
+                "min_s": 101.551,
+                "max_s": 105.617
+              },
+              "heldout|heldout-01": {
+                "min_s": 75.957,
+                "max_s": 85.525
+              },
+              "heldout|heldout-07": {
+                "min_s": 75.237,
+                "max_s": 75.727
+              },
+              "heldout|heldout-05": {
+                "min_s": 89.878,
+                "max_s": 91.419
+              }
+            }
+          },
+          "most_failed_predicates": [
+            {
+              "question_id": "heldout-02",
+              "predicate_index": 1,
+              "predicate": {
+                "type": "require",
+                "pattern": "replaceable ssd"
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "heldout-02",
+              "predicate_index": 2,
+              "predicate": {
+                "type": "require",
+                "pattern": "serviceable battery"
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "heldout-02",
+              "predicate_index": 3,
+              "predicate": {
+                "type": "require_any",
+                "patterns": [
+                  "wi fi 6",
+                  "wifi 6"
+                ]
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "heldout-03",
+              "predicate_index": 1,
+              "predicate": {
+                "type": "require",
+                "pattern": "\\bodm\\b"
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            },
+            {
+              "question_id": "heldout-03",
+              "predicate_index": 2,
+              "predicate": {
+                "type": "require",
+                "pattern": "authori[sz]ed distributor"
+              },
+              "failed_runs": 3,
+              "total_runs": 3
+            }
+          ],
+          "failed_runs": 0,
+          "thinking_chars_positive_runs": 0
+        }
+      },
+      "false_premise": {
+        "direct": [
+          {
+            "question_id": "heldout-12",
+            "repeat": 2,
+            "pass": false,
+            "passed": 0,
+            "total": 2
+          },
+          {
+            "question_id": "heldout-12",
+            "repeat": 1,
+            "pass": false,
+            "passed": 0,
+            "total": 2
+          },
+          {
+            "question_id": "heldout-12",
+            "repeat": 3,
+            "pass": false,
+            "passed": 0,
+            "total": 2
+          }
+        ],
+        "rag": [
+          {
+            "question_id": "heldout-12",
+            "repeat": 1,
+            "pass": false,
+            "passed": 0,
+            "total": 2
+          },
+          {
+            "question_id": "heldout-12",
+            "repeat": 3,
+            "pass": false,
+            "passed": 0,
+            "total": 2
+          },
+          {
+            "question_id": "heldout-12",
+            "repeat": 2,
+            "pass": false,
+            "passed": 0,
+            "total": 2
+          }
+        ],
+        "full": [
+          {
+            "question_id": "heldout-12",
+            "repeat": 2,
+            "pass": false,
+            "passed": 0,
+            "total": 2
+          },
+          {
+            "question_id": "heldout-12",
+            "repeat": 1,
+            "pass": false,
+            "passed": 0,
+            "total": 2
+          },
+          {
+            "question_id": "heldout-12",
+            "repeat": 3,
+            "pass": false,
+            "passed": 0,
+            "total": 2
+          }
+        ]
+      },
+      "paired_comparisons": [
+        {
+          "comparison": "full minus rag",
+          "questions_observed": 12,
+          "mean_difference": -0.037037,
+          "bootstrap_95_ci": [
+            -0.148148,
+            0.055556
+          ]
+        },
+        {
+          "comparison": "full minus direct",
+          "questions_observed": 12,
+          "mean_difference": -0.444444,
+          "bootstrap_95_ci": [
+            -0.722222,
+            -0.166667
+          ]
+        }
+      ]
+    }
+  },
+  "combined": {
+    "modes": {
+      "direct": {
+        "runs": 72,
+        "questions_observed": 24,
+        "pass_rate": {
+          "macro_mean": 0.858796,
+          "sd_across_repeats": 0.010608,
+          "repeat_macro_means": [
+            0.868056,
+            0.861111,
+            0.847222
+          ],
+          "bootstrap_95_ci": [
+            0.726852,
+            0.969907
+          ]
+        },
+        "pooled_passes": {
+          "passed": 174,
+          "total": 201,
+          "rate": 0.865672
+        },
+        "questions_passing_every_check": {
+          "per_repeat": [
+            {
+              "repeat": 1,
+              "passed": 19,
+              "out_of": 24,
+              "observed": 24
+            },
+            {
+              "repeat": 2,
+              "passed": 20,
+              "out_of": 24,
+              "observed": 24
+            },
+            {
+              "repeat": 3,
+              "passed": 19,
+              "out_of": 24,
+              "observed": 24
+            }
+          ],
+          "any_repeat": {
+            "passed": 20,
+            "out_of": 24,
+            "observed": 24
+          }
+        },
+        "evidence_recall": {
+          "value": null,
+          "note": "undefined for direct (no retrieved evidence)"
+        },
+        "latency_seconds": {
+          "mean": 125.598875,
+          "median": 108.108,
+          "p95": 178.8813,
+          "per_question_min_max": {
+            "heldout|heldout-11": {
+              "min_s": 100.174,
+              "max_s": 101.33
+            },
+            "heldout|heldout-02": {
+              "min_s": 112.534,
+              "max_s": 126.157
+            },
+            "dev|dev-11": {
+              "min_s": 92.705,
+              "max_s": 97.191
+            },
+            "dev|dev-06": {
+              "min_s": 104.18,
+              "max_s": 110.149
+            },
+            "heldout|heldout-01": {
+              "min_s": 88.487,
+              "max_s": 139.369
+            },
+            "dev|dev-05": {
+              "min_s": 96.614,
+              "max_s": 919.886
+            },
+            "heldout|heldout-03": {
+              "min_s": 88.549,
+              "max_s": 124.563
+            },
+            "heldout|heldout-09": {
+              "min_s": 102.821,
+              "max_s": 134.653
+            },
+            "heldout|heldout-06": {
+              "min_s": 109.016,
+              "max_s": 118.244
+            },
+            "heldout|heldout-10": {
+              "min_s": 87.917,
+              "max_s": 96.207
+            },
+            "dev|dev-08": {
+              "min_s": 91.961,
+              "max_s": 100.094
+            },
+            "dev|dev-09": {
+              "min_s": 111.808,
+              "max_s": 186.898
+            },
+            "dev|dev-03": {
+              "min_s": 99.679,
+              "max_s": 142.813
+            },
+            "heldout|heldout-08": {
+              "min_s": 99.591,
+              "max_s": 107.948
+            },
+            "heldout|heldout-04": {
+              "min_s": 111.724,
+              "max_s": 114.756
+            },
+            "dev|dev-10": {
+              "min_s": 88.752,
+              "max_s": 157.829
+            },
+            "dev|dev-12": {
+              "min_s": 103.617,
+              "max_s": 113.513
+            },
+            "dev|dev-02": {
+              "min_s": 112.084,
+              "max_s": 113.758
+            },
+            "dev|dev-01": {
+              "min_s": 162.703,
+              "max_s": 183.41
+            },
+            "dev|dev-07": {
+              "min_s": 104.113,
+              "max_s": 113.933
+            },
+            "heldout|heldout-07": {
+              "min_s": 99.887,
+              "max_s": 175.176
+            },
+            "dev|dev-04": {
+              "min_s": 117.069,
+              "max_s": 201.83
+            },
+            "heldout|heldout-05": {
+              "min_s": 98.749,
+              "max_s": 172.305
+            },
+            "heldout|heldout-12": {
+              "min_s": 90.044,
+              "max_s": 93.92
+            }
+          }
+        },
+        "most_failed_predicates": [
+          {
+            "question_id": "dev-01",
+            "predicate_index": 1,
+            "predicate": {
+              "type": "require",
+              "pattern": "\\b34550\\b"
+            },
+            "failed_runs": 3,
+            "total_runs": 3
+          },
+          {
+            "question_id": "dev-01",
+            "predicate_index": 2,
+            "predicate": {
+              "type": "require",
+              "pattern": "\\b217500\\b"
+            },
+            "failed_runs": 3,
+            "total_runs": 3
+          },
+          {
+            "question_id": "dev-01",
+            "predicate_index": 3,
+            "predicate": {
+              "type": "require",
+              "pattern": "\\b130\\b"
+            },
+            "failed_runs": 3,
+            "total_runs": 3
+          },
+          {
+            "question_id": "dev-07",
+            "predicate_index": 3,
+            "predicate": {
+              "type": "require_any",
+              "patterns": [
+                "direct pilot",
+                "expand channels"
+              ]
+            },
+            "failed_runs": 3,
+            "total_runs": 3
+          },
+          {
+            "question_id": "heldout-10",
+            "predicate_index": 3,
+            "predicate": {
+              "type": "require",
+              "pattern": "india"
+            },
+            "failed_runs": 3,
+            "total_runs": 3
+          }
+        ],
+        "failed_runs": 0,
+        "thinking_chars_positive_runs": 0
+      },
+      "rag": {
+        "runs": 72,
+        "questions_observed": 24,
+        "pass_rate": {
+          "macro_mean": 0.53125,
+          "sd_across_repeats": 0.012028,
+          "repeat_macro_means": [
+            0.545139,
+            0.524306,
+            0.524306
+          ],
+          "bootstrap_95_ci": [
+            0.354167,
+            0.708333
+          ]
+        },
+        "pooled_passes": {
+          "passed": 106,
+          "total": 201,
+          "rate": 0.527363
+        },
+        "questions_passing_every_check": {
+          "per_repeat": [
+            {
+              "repeat": 1,
+              "passed": 11,
+              "out_of": 24,
+              "observed": 24
+            },
+            {
+              "repeat": 2,
+              "passed": 11,
+              "out_of": 24,
+              "observed": 24
+            },
+            {
+              "repeat": 3,
+              "passed": 11,
+              "out_of": 24,
+              "observed": 24
+            }
+          ],
+          "any_repeat": {
+            "passed": 11,
+            "out_of": 24,
+            "observed": 24
+          }
+        },
+        "evidence_recall": {
+          "value": 0.538194,
+          "note": null
+        },
+        "latency_seconds": {
+          "mean": 15.701167,
+          "median": 14.3935,
+          "p95": 29.77065,
+          "per_question_min_max": {
+            "dev|dev-08": {
+              "min_s": 9.442,
+              "max_s": 15.535
+            },
+            "heldout|heldout-02": {
+              "min_s": 9.326,
+              "max_s": 10.895
+            },
+            "dev|dev-05": {
+              "min_s": 8.99,
+              "max_s": 9.107
+            },
+            "dev|dev-12": {
+              "min_s": 16.878,
+              "max_s": 28.917
+            },
+            "dev|dev-11": {
+              "min_s": 13.335,
+              "max_s": 31.785
+            },
+            "heldout|heldout-04": {
+              "min_s": 17.073,
+              "max_s": 21.52
+            },
+            "heldout|heldout-12": {
+              "min_s": 13.275,
+              "max_s": 15.934
+            },
+            "dev|dev-02": {
+              "min_s": 11.957,
+              "max_s": 18.562
+            },
+            "heldout|heldout-07": {
+              "min_s": 9.356,
+              "max_s": 10.308
+            },
+            "dev|dev-04": {
+              "min_s": 14.37,
+              "max_s": 14.747
+            },
+            "dev|dev-10": {
+              "min_s": 6.061,
+              "max_s": 6.179
+            },
+            "dev|dev-09": {
+              "min_s": 15.85,
+              "max_s": 16.324
+            },
+            "heldout|heldout-08": {
+              "min_s": 16.134,
+              "max_s": 25.37
+            },
+            "heldout|heldout-05": {
+              "min_s": 12.9,
+              "max_s": 13.495
+            },
+            "dev|dev-06": {
+              "min_s": 30.814,
+              "max_s": 45.395
+            },
+            "heldout|heldout-01": {
+              "min_s": 14.029,
+              "max_s": 25.063
+            },
+            "dev|dev-07": {
+              "min_s": 7.804,
+              "max_s": 8.423
+            },
+            "heldout|heldout-09": {
+              "min_s": 20.6,
+              "max_s": 21.099
+            },
+            "dev|dev-01": {
+              "min_s": 7.28,
+              "max_s": 7.693
+            },
+            "heldout|heldout-11": {
+              "min_s": 13.818,
+              "max_s": 14.893
+            },
+            "heldout|heldout-10": {
+              "min_s": 12.314,
+              "max_s": 15.039
+            },
+            "heldout|heldout-03": {
+              "min_s": 15.05,
+              "max_s": 26.037
+            },
+            "dev|dev-03": {
+              "min_s": 19.722,
+              "max_s": 20.47
+            },
+            "heldout|heldout-06": {
+              "min_s": 13.679,
+              "max_s": 21.081
+            }
+          }
+        },
+        "most_failed_predicates": [
+          {
+            "question_id": "dev-01",
+            "predicate_index": 1,
+            "predicate": {
+              "type": "require",
+              "pattern": "\\b34550\\b"
+            },
+            "failed_runs": 3,
+            "total_runs": 3
+          },
+          {
+            "question_id": "dev-01",
+            "predicate_index": 2,
+            "predicate": {
+              "type": "require",
+              "pattern": "\\b217500\\b"
+            },
+            "failed_runs": 3,
+            "total_runs": 3
+          },
+          {
+            "question_id": "dev-01",
+            "predicate_index": 3,
+            "predicate": {
+              "type": "require",
+              "pattern": "\\b130\\b"
+            },
+            "failed_runs": 3,
+            "total_runs": 3
+          },
+          {
+            "question_id": "dev-02",
+            "predicate_index": 2,
+            "predicate": {
+              "type": "require",
+              "pattern": "16\\s*gb"
+            },
+            "failed_runs": 3,
+            "total_runs": 3
+          },
+          {
+            "question_id": "dev-02",
+            "predicate_index": 3,
+            "predicate": {
+              "type": "require",
+              "pattern": "512\\s*gb"
+            },
+            "failed_runs": 3,
+            "total_runs": 3
+          }
+        ],
+        "failed_runs": 0,
+        "thinking_chars_positive_runs": 0
+      },
+      "full": {
+        "runs": 72,
+        "questions_observed": 24,
+        "pass_rate": {
+          "macro_mean": 0.465278,
+          "sd_across_repeats": 0.033123,
+          "repeat_macro_means": [
+            0.46875,
+            0.496528,
+            0.430556
+          ],
+          "bootstrap_95_ci": [
+            0.289294,
+            0.643519
+          ]
+        },
+        "pooled_passes": {
+          "passed": 89,
+          "total": 201,
+          "rate": 0.442786
+        },
+        "questions_passing_every_check": {
+          "per_repeat": [
+            {
+              "repeat": 1,
+              "passed": 10,
+              "out_of": 24,
+              "observed": 24
+            },
+            {
+              "repeat": 2,
+              "passed": 10,
+              "out_of": 24,
+              "observed": 24
+            },
+            {
+              "repeat": 3,
+              "passed": 9,
+              "out_of": 24,
+              "observed": 24
+            }
+          ],
+          "any_repeat": {
+            "passed": 11,
+            "out_of": 24,
+            "observed": 24
+          }
+        },
+        "evidence_recall": {
+          "value": 0.476852,
+          "note": null
+        },
+        "latency_seconds": {
+          "mean": 116.667486,
+          "median": 96.8925,
+          "p95": 213.8104,
+          "per_question_min_max": {
+            "heldout|heldout-11": {
+              "min_s": 91.046,
+              "max_s": 122.876
+            },
+            "dev|dev-05": {
+              "min_s": 84.973,
+              "max_s": 99.329
+            },
+            "heldout|heldout-09": {
+              "min_s": 148.595,
+              "max_s": 216.512
+            },
+            "dev|dev-03": {
+              "min_s": 104.757,
+              "max_s": 124.338
+            },
+            "dev|dev-08": {
+              "min_s": 90.245,
+              "max_s": 359.866
+            },
+            "dev|dev-09": {
+              "min_s": 119.258,
+              "max_s": 211.6
+            },
+            "heldout|heldout-02": {
+              "min_s": 93.763,
+              "max_s": 137.265
+            },
+            "dev|dev-07": {
+              "min_s": 88.063,
+              "max_s": 379.949
+            },
+            "heldout|heldout-10": {
+              "min_s": 77.744,
+              "max_s": 92.511
+            },
+            "dev|dev-12": {
+              "min_s": 76.546,
+              "max_s": 85.03
+            },
+            "dev|dev-10": {
+              "min_s": 78.089,
+              "max_s": 84.762
+            },
+            "heldout|heldout-04": {
+              "min_s": 104.887,
+              "max_s": 130.144
+            },
+            "heldout|heldout-03": {
+              "min_s": 86.938,
+              "max_s": 139.887
+            },
+            "heldout|heldout-12": {
+              "min_s": 142.192,
+              "max_s": 169.326
+            },
+            "heldout|heldout-06": {
+              "min_s": 113.325,
+              "max_s": 139.577
+            },
+            "dev|dev-01": {
+              "min_s": 95.367,
+              "max_s": 101.332
+            },
+            "heldout|heldout-08": {
+              "min_s": 101.551,
+              "max_s": 105.617
+            },
+            "dev|dev-02": {
+              "min_s": 94.675,
+              "max_s": 97.047
+            },
+            "heldout|heldout-01": {
+              "min_s": 75.957,
+              "max_s": 85.525
+            },
+            "dev|dev-06": {
+              "min_s": 88.35,
+              "max_s": 95.762
+            },
+            "heldout|heldout-07": {
+              "min_s": 75.237,
+              "max_s": 75.727
+            },
+            "dev|dev-11": {
+              "min_s": 87.746,
+              "max_s": 92.337
+            },
+            "dev|dev-04": {
+              "min_s": 142.823,
+              "max_s": 199.515
+            },
+            "heldout|heldout-05": {
+              "min_s": 89.878,
+              "max_s": 91.419
+            }
+          }
+        },
+        "most_failed_predicates": [
+          {
+            "question_id": "dev-02",
+            "predicate_index": 1,
+            "predicate": {
+              "type": "require",
+              "pattern": "14\\s*(inch|in\\b|\\x22)"
+            },
+            "failed_runs": 3,
+            "total_runs": 3
+          },
+          {
+            "question_id": "dev-02",
+            "predicate_index": 2,
+            "predicate": {
+              "type": "require",
+              "pattern": "16\\s*gb"
+            },
+            "failed_runs": 3,
+            "total_runs": 3
+          },
+          {
+            "question_id": "dev-02",
+            "predicate_index": 3,
+            "predicate": {
+              "type": "require",
+              "pattern": "512\\s*gb"
+            },
+            "failed_runs": 3,
+            "total_runs": 3
+          },
+          {
+            "question_id": "dev-06",
+            "predicate_index": 1,
+            "predicate": {
+              "type": "require",
+              "pattern": "margin eros"
+            },
+            "failed_runs": 3,
+            "total_runs": 3
+          },
+          {
+            "question_id": "dev-06",
+            "predicate_index": 2,
+            "predicate": {
+              "type": "require_any",
+              "patterns": [
+                "dual sourc",
+                "second sourc"
+              ]
+            },
+            "failed_runs": 3,
+            "total_runs": 3
+          }
+        ],
+        "failed_runs": 4,
+        "thinking_chars_positive_runs": 0
+      }
+    },
+    "false_premise": {
+      "direct": [
+        {
+          "set": "dev",
+          "question_id": "dev-12",
+          "repeat": 1,
+          "pass": true,
+          "passed": 2,
+          "total": 2
+        },
+        {
+          "set": "dev",
+          "question_id": "dev-12",
+          "repeat": 3,
+          "pass": true,
+          "passed": 2,
+          "total": 2
+        },
+        {
+          "set": "heldout",
+          "question_id": "heldout-12",
+          "repeat": 2,
+          "pass": false,
+          "passed": 0,
+          "total": 2
+        },
+        {
+          "set": "dev",
+          "question_id": "dev-12",
+          "repeat": 2,
+          "pass": true,
+          "passed": 2,
+          "total": 2
+        },
+        {
+          "set": "heldout",
+          "question_id": "heldout-12",
+          "repeat": 1,
+          "pass": false,
+          "passed": 0,
+          "total": 2
+        },
+        {
+          "set": "heldout",
+          "question_id": "heldout-12",
+          "repeat": 3,
+          "pass": false,
+          "passed": 0,
+          "total": 2
+        }
+      ],
+      "rag": [
+        {
+          "set": "dev",
+          "question_id": "dev-12",
+          "repeat": 2,
+          "pass": false,
+          "passed": 0,
+          "total": 2
+        },
+        {
+          "set": "heldout",
+          "question_id": "heldout-12",
+          "repeat": 1,
+          "pass": false,
+          "passed": 0,
+          "total": 2
+        },
+        {
+          "set": "dev",
+          "question_id": "dev-12",
+          "repeat": 3,
+          "pass": false,
+          "passed": 0,
+          "total": 2
+        },
+        {
+          "set": "heldout",
+          "question_id": "heldout-12",
+          "repeat": 3,
+          "pass": false,
+          "passed": 0,
+          "total": 2
+        },
+        {
+          "set": "dev",
+          "question_id": "dev-12",
+          "repeat": 1,
+          "pass": false,
+          "passed": 1,
+          "total": 2
+        },
+        {
+          "set": "heldout",
+          "question_id": "heldout-12",
+          "repeat": 2,
+          "pass": false,
+          "passed": 0,
+          "total": 2
+        }
+      ],
+      "full": [
+        {
+          "set": "dev",
+          "question_id": "dev-12",
+          "repeat": 2,
+          "pass": true,
+          "passed": 2,
+          "total": 2
+        },
+        {
+          "set": "heldout",
+          "question_id": "heldout-12",
+          "repeat": 2,
+          "pass": false,
+          "passed": 0,
+          "total": 2
+        },
+        {
+          "set": "dev",
+          "question_id": "dev-12",
+          "repeat": 3,
+          "pass": true,
+          "passed": 2,
+          "total": 2
+        },
+        {
+          "set": "heldout",
+          "question_id": "heldout-12",
+          "repeat": 1,
+          "pass": false,
+          "passed": 0,
+          "total": 2
+        },
+        {
+          "set": "heldout",
+          "question_id": "heldout-12",
+          "repeat": 3,
+          "pass": false,
+          "passed": 0,
+          "total": 2
+        },
+        {
+          "set": "dev",
+          "question_id": "dev-12",
+          "repeat": 1,
+          "pass": true,
+          "passed": 2,
+          "total": 2
+        }
+      ]
+    },
+    "paired_comparisons": [
+      {
+        "comparison": "full minus rag",
+        "questions_observed": 24,
+        "mean_difference": -0.065972,
+        "bootstrap_95_ci": [
+          -0.208333,
+          0.071759
+        ]
+      },
+      {
+        "comparison": "full minus direct",
+        "questions_observed": 24,
+        "mean_difference": -0.393519,
+        "bootstrap_95_ci": [
+          -0.585648,
+          -0.199074
+        ]
+      }
+    ]
+  }
+}

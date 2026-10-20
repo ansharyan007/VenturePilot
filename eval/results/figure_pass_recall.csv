@@ -1,0 +1,10 @@
+set,mode,pass_rate,pass_rate_ci_low,pass_rate_ci_high,evidence_recall
+dev,direct,0.837963,0.62963,1,
+dev,rag,0.590278,0.347222,0.819444,0.576389
+dev,full,0.49537,0.25463,0.740741,0.412037
+heldout,direct,0.87963,0.703704,1,
+heldout,rag,0.472222,0.222222,0.75,0.5
+heldout,full,0.435185,0.175926,0.685417,0.541667
+combined,direct,0.858796,0.726852,0.969907,
+combined,rag,0.53125,0.354167,0.708333,0.538194
+combined,full,0.465278,0.289294,0.643519,0.476852
