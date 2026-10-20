@@ -12,6 +12,22 @@ export function normalize(value) {
     .trim()
 }
 
+/** Separate model reasoning accidentally included in content from answer text. */
+export function separateThinking(content, thinking = '') {
+  let extracted = thinking || ''
+  let answer = String(content || '')
+  answer = answer.replace(/<think>([\s\S]*?)<\/think>\s*/gi, (_, text) => {
+    extracted += text
+    return ''
+  })
+  answer = answer.replace(/^\s*thinking\s*:\s*([\s\S]*?)(?=\n\s*(?:final\s*:|answer\s*:)|$)/i, (_, text) => {
+    extracted += text
+    return ''
+  })
+  answer = answer.replace(/^\s*(?:final|answer)\s*:\s*/i, '')
+  return { answer: answer.trim(), thinking: extracted.trim(), thinking_chars: extracted.length }
+}
+
 export function matches(answer, pattern) {
   return new RegExp(normalize(pattern), 'i').test(normalize(answer))
 }

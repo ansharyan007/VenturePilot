@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
-import { normalize, passes, score } from './predicates.mjs'
+import { normalize, passes, score, separateThinking } from './predicates.mjs'
 
 const dev = JSON.parse(await readFile(new URL('./questions.dev.json', import.meta.url)))
 const heldout = JSON.parse(await readFile(new URL('./questions.heldout.json', import.meta.url)))
@@ -11,6 +11,8 @@ const tests = [
   ['normalizes dashes', () => assert.equal(normalize('end-of-line'), 'end of line')],
   ['normalizes curly apostrophes', () => assert.equal(normalize('isn’t'), "isn't")],
   ['normalizes slash spaces', () => assert.equal(normalize('Product / CTO'), 'product/cto')],
+  ['separates think tags from final answer', () => assert.deepEqual(separateThinking('<think>reasoning</think>Final: 130'), { answer: '130', thinking: 'reasoning', thinking_chars: 9 })],
+  ['separates Thinking block from final answer', () => assert.deepEqual(separateThinking('Thinking: hidden work\nAnswer: CEO'), { answer: 'CEO', thinking: 'hidden work', thinking_chars: 11 })],
   ['dev-04 accepts 1,659 units', () => assert.equal(passes('1,659 units', predicate(dev, 'dev-04', 0)), true)],
   ['dev-04 accepts 1658 units', () => assert.equal(passes('1658 units', predicate(dev, 'dev-04', 0)), true)],
   ['heldout-12 accepts certificate denial', () => assert.equal(passes('no certificate number was issued', predicate(heldout, 'heldout-12', 1)), true)],

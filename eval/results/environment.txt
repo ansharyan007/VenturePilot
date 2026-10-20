@@ -1,0 +1,21 @@
+Evaluation environment (captured before the first evaluation run)
+
+Ollama client/server: 0.22.1
+Model: qwen3:8b
+Model ID: 500a1f067a9f
+Parameters: 8.2B
+Context length: 40960
+Quantization: Q4_K_M
+Embedding model: nomic-embed-text:latest (0a109f422b47)
+
+Application call settings: `server/models.ts` passes `think: false` for every
+`qwen3:` model, uses temperature 0.15, num_predict 1800, and num_ctx 8192.
+The evaluation runner must preserve these settings in direct, RAG, and full
+modes. Thinking is therefore off according to repository-head code; if a
+provider nevertheless places thinking in message content, only final content
+after `separateThinking()` is scored. Raw content, separated thinking, and
+thinking_chars are retained in raw.jsonl.
+
+OS: Darwin 25.6.0 (arm64)
+CPU/GPU: Apple M4, 8 cores; Metal supported
+RAM: 16 GiB (17179869184 bytes)
