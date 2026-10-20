@@ -6,10 +6,10 @@ topics, and includes one false-premise question. Predicates are regular
 expression checks against normalized answer and pattern text: lowercase;
 replace hyphens, en/em dashes, and non-breaking hyphens with spaces; replace
 curly apostrophes with straight apostrophes; strip Markdown, thousands commas,
-and currency symbols; then collapse whitespace. A `require` predicate must
-match, `require_any` passes when at least one supplied pattern matches, and a
-`forbid` predicate must not match. These rule checks are not a measure of
-semantic correctness.
+and currency symbols; collapse whitespace; and remove whitespace surrounding
+`/`. A `require` predicate must match, `require_any` passes when at least one
+supplied pattern matches, and a `forbid` predicate must not match. These rule
+checks are not a measure of semantic correctness.
 
 Numeric predicates are taken from the saved fixture and deterministic output of
 `python3 src/demo_check.py`; no model output was used to write them. The
@@ -50,3 +50,8 @@ stage names as “Prototype” and “Small batch”; heldout-07 therefore check
 those names. The dev-05 exclusion was removed: Hardware engineer is stored at
 the Prototype stage, but a correct answer need not mention it. No model had
 been run.
+
+The final pre-run correction uses alternative spellings for Wi-Fi, e-commerce,
+and e-waste; uses bounded CEO/CTO checks; and makes slash spacing equivalent.
+It also turns heldout-11's phrase checks into evidence-backed stems and accepts
+common 14-inch screen-size renderings. No model had been run.
