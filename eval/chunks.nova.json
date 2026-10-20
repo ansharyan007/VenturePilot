@@ -1,0 +1,218 @@
+[
+  {
+    "id": "venture-scope",
+    "title": "Authoritative venture scope",
+    "content": "{\"category\":\"Laptop\",\"originalIdea\":\"Affordable, dependable laptops designed for Indian college students.\",\"description\":\"A student-first laptop brand balancing everyday performance, repairability, and accessible pricing.\",\"targetCustomer\":\"College students and young professionals\",\"targetMarket\":\"Indian higher education and first-job market\",\"geographicMarket\":\"India — launch in tier 1 and tier 2 cities\"}",
+    "kind": "startup"
+  },
+  {
+    "id": "tool-calculations",
+    "title": "Deterministic calculation tool",
+    "content": "{\"finance\":{\"unitCost\":34550,\"grossProfitPerUnit\":10450,\"grossMargin\":23.22222222222222,\"revenue\":6750000,\"cogs\":5182500,\"grossProfit\":1567500,\"operatingExpenses\":1350000,\"operatingProfit\":217500,\"breakEvenUnits\":130,\"breakEvenRevenue\":5850000},\"capacity\":{\"theoreticalDaily\":96,\"theoreticalMonthly\":2304,\"theoreticalAnnual\":27648,\"realisticDaily\":69.12,\"realisticMonthly\":1658.8799999999999,\"realisticAnnual\":19906.559999999998}}",
+    "kind": "startup"
+  },
+  {
+    "id": "s-name-0",
+    "title": "Saved Name",
+    "content": "\"NovaEdge Technologies\"",
+    "kind": "startup"
+  },
+  {
+    "id": "s-category-0",
+    "title": "Saved Category",
+    "content": "\"Laptop\"",
+    "kind": "startup"
+  },
+  {
+    "id": "s-idea-0",
+    "title": "Saved Idea",
+    "content": "\"Affordable, dependable laptops designed for Indian college students.\"",
+    "kind": "startup"
+  },
+  {
+    "id": "s-description-0",
+    "title": "Saved Description",
+    "content": "\"A student-first laptop brand balancing everyday performance, repairability, and accessible pricing.\"",
+    "kind": "startup"
+  },
+  {
+    "id": "s-targetMarket-0",
+    "title": "Saved Target Market",
+    "content": "\"Indian higher education and first-job market\"",
+    "kind": "startup"
+  },
+  {
+    "id": "s-targetCustomer-0",
+    "title": "Saved Target Customer",
+    "content": "\"College students and young professionals\"",
+    "kind": "startup"
+  },
+  {
+    "id": "s-geographicMarket-0",
+    "title": "Saved Geographic Market",
+    "content": "\"India — launch in tier 1 and tier 2 cities\"",
+    "kind": "startup"
+  },
+  {
+    "id": "s-launchTimeline-0",
+    "title": "Saved Launch Timeline",
+    "content": "\"9 months\"",
+    "kind": "startup"
+  },
+  {
+    "id": "s-stage-0",
+    "title": "Saved Stage",
+    "content": "\"Product planning\"",
+    "kind": "startup"
+  },
+  {
+    "id": "s-founder-0",
+    "title": "Saved Founder",
+    "content": "{\"name\":\"Demo Founder\",\"country\":\"India\",\"region\":\"Karnataka\",\"founderCount\":2,\"experience\":\"Consumer technology and campus communities\",\"availableBudget\":7500000}",
+    "kind": "startup"
+  },
+  {
+    "id": "s-analysis-0",
+    "title": "Saved Analysis",
+    "content": "{\"concept\":\"A focused electronics brand building practical laptops around the needs and budgets of Indian students.\",\"problem\":\"Students often choose between underpowered entry laptops and premium models that exceed their budgets.\",\"targetCustomer\":\"College students who need reliable all-day productivity, coding, coursework, and entertainment.\",\"valueProposition\":\"Balanced performance, local service, and student-friendly financing at an attainable price.\",\"businessModel\":\"Direct online sales supported by campus partnerships and selective retail distribution.\",\"productStrategy\":\"Launch one tightly scoped 14-inch model, validate demand, then expand configurations.\",\"competitivePositioning\":\"Student-specific experience and service rather than a broad consumer-device portfolio.\",\"feasibility\":\"Feasible through an experienced ODM partner, but margin, demand validation, and service coverage are critical.\",\"scores\":{\"Market potential\":7,\"Technical complexity\":6,\"Capital requirement\":8,\"Manufacturing difficulty\":7,\"Regulatory complexity\":6,\"Scalability\":7}}",
+    "kind": "startup"
+  },
+  {
+    "id": "s-identity-0",
+    "title": "Saved Identity",
+    "content": "{\"mission\":\"Make capable personal computing attainable for every ambitious student.\",\"vision\":\"Become India’s most trusted student technology brand.\",\"problem\":\"Affordable laptops frequently compromise on the experience students use every day.\",\"solution\":\"A well-balanced laptop with transparent specifications, repairable design, and responsive local support.\",\"valueProposition\":\"Everything a student needs, with no expensive distractions.\",\"targetMarket\":\"Students and early-career professionals in India\",\"customerPersona\":\"A value-conscious 19-year-old engineering student buying a first personal laptop.\",\"businessModel\":\"Hardware margin, accessories, extended service, and institutional programs.\",\"brandPositioning\":\"Smart, honest, youthful, and dependable.\"}",
+    "kind": "startup"
+  },
+  {
+    "id": "s-product-0",
+    "title": "Saved Product · Mvp–Differentiators",
+    "content": "{\"mvp\":\"14-inch productivity laptop with modern mid-range processor, 16 GB RAM, 512 GB SSD, and all-day battery target.\",\"futureProducts\":\"Performance edition, lightweight 13-inch model, docking accessories, and institutional fleet package.\",\"technicalRequirements\":\"Durable chassis, replaceable SSD, serviceable battery, 1080p display, Wi-Fi 6, and India-ready charger.\",\"differentiators\":\"Balanced default configuration, transparent repair program, campus service network, and low-bloat software.\"}",
+    "kind": "startup"
+  },
+  {
+    "id": "s-product-1",
+    "title": "Saved Product · Specs",
+    "content": "{\"specs\":[{\"id\":\"17654daa-332c-480d-b09f-134e23d3571a\",\"name\":\"CPU\",\"value\":\"Modern 6-core mobile processor\",\"notes\":\"\"},{\"id\":\"d74c6cc3-2327-4db3-a5b2-be0e635a81c4\",\"name\":\"GPU\",\"value\":\"Integrated graphics\",\"notes\":\"\"},{\"id\":\"8ec67e0a-a5e9-4c09-9136-e10ac5f9ef21\",\"name\":\"RAM\",\"value\":\"16 GB DDR5\",\"notes\":\"\"},{\"id\":\"b6807ac3-e295-4c68-b3b2-302021f14599\",\"name\":\"Storage\",\"value\":\"512 GB NVMe SSD\",\"notes\":\"\"},{\"id\":\"0d463fe7-e82b-4aac-bc61-d8873a3efd01\",\"name\":\"Display\",\"value\":\"14-inch FHD IPS, 300 nits\",\"notes\":\"\"},{\"id\":\"aee9a23e-f2e2-4090-97bf-8ba30d9d878b\",\"name\":\"Battery\",\"value\":\"55 Wh\",\"notes\":\"\"},{\"id\":\"6d780be0-5277-44fd-8883-f58fe9f141c8\",\"name\":\"Connectivity\",\"value\":\"Wi-Fi 6 + Bluetooth 5.3\",\"notes\":\"\"},{\"id\":\"4150781d-d7bf-4b68-ac5b-e86ccedf7f9f\",\"name\":\"Ports\",\"value\":\"USB-C, 2× USB-A, HDMI, audio\",\"notes\":\"\"},{\"id\":\"ed17787b-a72a-41c0-aea1-185a9c64c030\",\"name\":\"Operating system\",\"value\":\"Windows 11 Home\",\"notes\":\"\"},{\"id\":\"7d2d37ac-982b-42bd-a5e1-a3c8337cf72c\",\"name\":\"Chassis\",\"value\":\"Reinforced polycarbonate\",\"notes\":\"\"},{\"id\":\"ccd9a7b9-964b-4b17-84e4-699f5c638c59\",\"name\":\"Charger\",\"value\":\"65 W USB-C\",\"notes\":\"\"}]}",
+    "kind": "startup"
+  },
+  {
+    "id": "s-bom-0",
+    "title": "Saved BOM · Items 1–5 of 10",
+    "content": "[{\"id\":\"5c3d6554-5c32-41f6-988f-9780dc639161\",\"component\":\"Processor + chipset\",\"quantity\":1,\"unitCost\":9000,\"supplierType\":\"ODM / authorized distributor\",\"criticality\":\"High\",\"notes\":\"Demo planning estimate — not a supplier quote.\"},{\"id\":\"10a89d78-8a77-4c56-b1aa-7a3db656ceb2\",\"component\":\"Display assembly\",\"quantity\":1,\"unitCost\":4300,\"supplierType\":\"Panel distributor\",\"criticality\":\"High\",\"notes\":\"Demo planning estimate — not a supplier quote.\"},{\"id\":\"0670c9a6-921a-439e-8ee6-f5cb17d39eae\",\"component\":\"Memory\",\"quantity\":1,\"unitCost\":2500,\"supplierType\":\"Component distributor\",\"criticality\":\"Medium\",\"notes\":\"Demo planning estimate — not a supplier quote.\"},{\"id\":\"797e663f-e908-48d9-8026-4b34bd79f031\",\"component\":\"NVMe storage\",\"quantity\":1,\"unitCost\":2600,\"supplierType\":\"Component distributor\",\"criticality\":\"Medium\",\"notes\":\"Demo planning estimate — not a supplier quote.\"},{\"id\":\"671b0184-ba33-492e-b757-7ea8516e6f2a\",\"component\":\"Motherboard\",\"quantity\":1,\"unitCost\":5200,\"supplierType\":\"ODM\",\"criticality\":\"High\",\"notes\":\"Demo planning estimate — not a supplier quote.\"}]",
+    "kind": "startup"
+  },
+  {
+    "id": "s-bom-1",
+    "title": "Saved BOM · Items 6–10 of 10",
+    "content": "[{\"id\":\"91515141-3724-4b8a-a342-ace2aa6fa605\",\"component\":\"Battery pack\",\"quantity\":1,\"unitCost\":2400,\"supplierType\":\"Certified pack supplier\",\"criticality\":\"High\",\"notes\":\"Demo planning estimate — not a supplier quote.\"},{\"id\":\"d735d28e-0788-4686-9fdd-29b2dbc883e3\",\"component\":\"Chassis + input\",\"quantity\":1,\"unitCost\":3200,\"supplierType\":\"ODM\",\"criticality\":\"Medium\",\"notes\":\"Demo planning estimate — not a supplier quote.\"},{\"id\":\"8395da64-b8d8-449b-972a-6e11bf207592\",\"component\":\"Wireless module\",\"quantity\":1,\"unitCost\":850,\"supplierType\":\"Component distributor\",\"criticality\":\"Medium\",\"notes\":\"Demo planning estimate — not a supplier quote.\"},{\"id\":\"9853339a-32d1-4a42-b65c-0f2b0eecb6e3\",\"component\":\"Charger\",\"quantity\":1,\"unitCost\":950,\"supplierType\":\"Certified supplier\",\"criticality\":\"High\",\"notes\":\"Demo planning estimate — not a supplier quote.\"},{\"id\":\"d7a43dfc-b61b-47a5-a18e-7cdb415f7762\",\"component\":\"Packaging\",\"quantity\":1,\"unitCost\":500,\"supplierType\":\"Local converter\",\"criticality\":\"Low\",\"notes\":\"Demo planning estimate — not a supplier quote.\"}]",
+    "kind": "startup"
+  },
+  {
+    "id": "s-manufacturing-0",
+    "title": "Saved Manufacturing",
+    "content": "{\"strategy\":\"Contract manufacturing\",\"advantages\":\"Lower initial capex; access to established assembly and testing capability.\",\"disadvantages\":\"Lower process control; dependency on partner schedules and minimum order quantities.\",\"complexity\":\"Medium–high\",\"capitalRequirements\":3500000,\"workforce\":\"Product lead, quality engineer, sourcing manager, and partner program manager.\",\"qualityControl\":\"Incoming inspection, golden sample, end-of-line functional testing, burn-in sampling, and traceability.\",\"risks\":\"MOQ pressure, schedule slippage, yield variability, and weak change control.\",\"factorySize\":1200,\"productionLines\":1,\"unitsPerHour\":12,\"hoursPerDay\":8,\"daysPerMonth\":24,\"utilization\":72}",
+    "kind": "startup"
+  },
+  {
+    "id": "s-supplyChain-0",
+    "title": "Saved Supply chain · Items 1–3 of 8",
+    "content": "[{\"id\":\"bab89c5b-cad3-4435-b665-102d1d1d467b\",\"name\":\"Supplier\",\"purpose\":\"Secure approved components with traceability.\",\"requirements\":\"Documented owner, SLA, quality criteria, and backup path.\",\"dependencies\":\"Approved specification and forecast\",\"risks\":\"Delay, cost variance, or quality escape.\",\"notes\":\"DEMO DATA\"},{\"id\":\"4243be69-c1cb-49d0-ad38-8afaaaba6912\",\"name\":\"Inbound logistics\",\"purpose\":\"Move the product through inbound logistics.\",\"requirements\":\"Documented owner, SLA, quality criteria, and backup path.\",\"dependencies\":\"Previous stage completion\",\"risks\":\"Delay, cost variance, or quality escape.\",\"notes\":\"DEMO DATA\"},{\"id\":\"32244228-8d0c-4d39-b61b-6b9966509501\",\"name\":\"Manufacturing\",\"purpose\":\"Move the product through manufacturing.\",\"requirements\":\"Documented owner, SLA, quality criteria, and backup path.\",\"dependencies\":\"Previous stage completion\",\"risks\":\"Delay, cost variance, or quality escape.\",\"notes\":\"DEMO DATA\"}]",
+    "kind": "startup"
+  },
+  {
+    "id": "s-supplyChain-1",
+    "title": "Saved Supply chain · Items 4–6 of 8",
+    "content": "[{\"id\":\"235f7605-8f25-4d9c-b69a-4504030c3583\",\"name\":\"Quality control\",\"purpose\":\"Move the product through quality control.\",\"requirements\":\"Documented owner, SLA, quality criteria, and backup path.\",\"dependencies\":\"Previous stage completion\",\"risks\":\"Delay, cost variance, or quality escape.\",\"notes\":\"DEMO DATA\"},{\"id\":\"7a65963e-6ed8-4179-9158-62610445f4b2\",\"name\":\"Warehouse\",\"purpose\":\"Move the product through warehouse.\",\"requirements\":\"Documented owner, SLA, quality criteria, and backup path.\",\"dependencies\":\"Previous stage completion\",\"risks\":\"Delay, cost variance, or quality escape.\",\"notes\":\"DEMO DATA\"},{\"id\":\"192b8fb3-1bb2-4fbb-a670-251088ade93c\",\"name\":\"Distributor\",\"purpose\":\"Move the product through distributor.\",\"requirements\":\"Documented owner, SLA, quality criteria, and backup path.\",\"dependencies\":\"Previous stage completion\",\"risks\":\"Delay, cost variance, or quality escape.\",\"notes\":\"DEMO DATA\"}]",
+    "kind": "startup"
+  },
+  {
+    "id": "s-supplyChain-2",
+    "title": "Saved Supply chain · Items 7–8 of 8",
+    "content": "[{\"id\":\"9538c9e0-dafa-4c39-9aa8-329402ab872a\",\"name\":\"Retail / e-commerce\",\"purpose\":\"Move the product through retail / e-commerce.\",\"requirements\":\"Documented owner, SLA, quality criteria, and backup path.\",\"dependencies\":\"Previous stage completion\",\"risks\":\"Delay, cost variance, or quality escape.\",\"notes\":\"DEMO DATA\"},{\"id\":\"c9dd2095-25b5-42eb-b7e9-c906c55dc8f8\",\"name\":\"Customer\",\"purpose\":\"Move the product through customer.\",\"requirements\":\"Documented owner, SLA, quality criteria, and backup path.\",\"dependencies\":\"Previous stage completion\",\"risks\":\"Delay, cost variance, or quality escape.\",\"notes\":\"DEMO DATA\"}]",
+    "kind": "startup"
+  },
+  {
+    "id": "s-distribution-0",
+    "title": "Saved Distribution",
+    "content": "{\"model\":\"Hybrid\",\"stages\":[{\"id\":\"e731a4ba-e37b-41a1-b5a3-140d6bced226\",\"name\":\"Factory\",\"purpose\":\"Deliver products efficiently and visibly.\",\"requirements\":\"Inventory visibility and defined handoff.\",\"dependencies\":\"Production release\",\"risks\":\"Damage, aging inventory, or late delivery.\",\"notes\":\"DEMO DATA\"},{\"id\":\"5f0f57ce-a13e-4d7c-a103-e154d41e8c9f\",\"name\":\"Central warehouse\",\"purpose\":\"Deliver products efficiently and visibly.\",\"requirements\":\"Inventory visibility and defined handoff.\",\"dependencies\":\"Previous node\",\"risks\":\"Damage, aging inventory, or late delivery.\",\"notes\":\"DEMO DATA\"},{\"id\":\"1ffc2918-25e8-457e-a6f1-f9aaba18cd18\",\"name\":\"E-commerce / campus partners\",\"purpose\":\"Deliver products efficiently and visibly.\",\"requirements\":\"Inventory visibility and defined handoff.\",\"dependencies\":\"Previous node\",\"risks\":\"Damage, aging inventory, or late delivery.\",\"notes\":\"DEMO DATA\"},{\"id\":\"ca482d1a-2e7d-4045-aa45-bd04252b51ab\",\"name\":\"Customer\",\"purpose\":\"Deliver products efficiently and visibly.\",\"requirements\":\"Inventory visibility and defined handoff.\",\"dependencies\":\"Previous node\",\"risks\":\"Damage, aging inventory, or late delivery.\",\"notes\":\"DEMO DATA\"}]}",
+    "kind": "startup"
+  },
+  {
+    "id": "s-compliance-0",
+    "title": "Saved Compliance · Items 1–4 of 9",
+    "content": "[{\"id\":\"e9ea696a-eadd-4961-b1d8-2b6a39790d76\",\"name\":\"Company registration\",\"status\":\"Not started\",\"importance\":\"High\",\"description\":\"Choose and register an appropriate legal entity.\",\"nextAction\":\"Confirm applicability with an official source and qualified adviser.\"},{\"id\":\"1855980e-ca23-4eff-a8f1-8fad42e654d7\",\"name\":\"PAN / TAN / GST\",\"status\":\"Not started\",\"importance\":\"High\",\"description\":\"Assess tax registrations and operating obligations.\",\"nextAction\":\"Confirm applicability with an official source and qualified adviser.\"},{\"id\":\"b9fc46a0-23ed-4328-8eb9-28ccc3bf07b3\",\"name\":\"Product safety and certification\",\"status\":\"Not started\",\"importance\":\"High\",\"description\":\"Identify standards and certification pathways for the exact product.\",\"nextAction\":\"Confirm applicability with an official source and qualified adviser.\"},{\"id\":\"90d2156e-301b-4210-9b92-8603fd63cbac\",\"name\":\"Wireless / radio requirements\",\"status\":\"Not started\",\"importance\":\"High\",\"description\":\"Review approvals for Wi-Fi and Bluetooth modules.\",\"nextAction\":\"Confirm applicability with an official source and qualified adviser.\"}]",
+    "kind": "startup"
+  },
+  {
+    "id": "s-compliance-1",
+    "title": "Saved Compliance · Items 5–8 of 9",
+    "content": "[{\"id\":\"62513f7c-5066-4297-af1d-bf0e679c4131\",\"name\":\"E-waste responsibilities\",\"status\":\"Not started\",\"importance\":\"High\",\"description\":\"Assess producer obligations and end-of-life processes.\",\"nextAction\":\"Confirm applicability with an official source and qualified adviser.\"},{\"id\":\"b9788370-473d-4717-9c9a-f39311e5422e\",\"name\":\"Battery and transport\",\"status\":\"Not started\",\"importance\":\"High\",\"description\":\"Validate cell, pack, labeling, and transport requirements.\",\"nextAction\":\"Confirm applicability with an official source and qualified adviser.\"},{\"id\":\"c7290622-c1b9-4546-84c5-8cc427e9977e\",\"name\":\"Import / export\",\"status\":\"Not started\",\"importance\":\"Medium\",\"description\":\"Assess importer registrations, classification, duty, and documentation.\",\"nextAction\":\"Confirm applicability with an official source and qualified adviser.\"},{\"id\":\"a8150d0d-dafc-4359-9468-235b28876cca\",\"name\":\"Packaging and labeling\",\"status\":\"Not started\",\"importance\":\"Medium\",\"description\":\"Review declarations, labeling, and packaging rules.\",\"nextAction\":\"Confirm applicability with an official source and qualified adviser.\"}]",
+    "kind": "startup"
+  },
+  {
+    "id": "s-compliance-2",
+    "title": "Saved Compliance · Item 9 of 9",
+    "content": "[{\"id\":\"b4a2b922-f990-404f-8b10-735f3bb16839\",\"name\":\"Consumer protection\",\"status\":\"Not started\",\"importance\":\"High\",\"description\":\"Define warranty, returns, service, and customer disclosures.\",\"nextAction\":\"Confirm applicability with an official source and qualified adviser.\"}]",
+    "kind": "startup"
+  },
+  {
+    "id": "s-financials-0",
+    "title": "Saved Financials",
+    "content": "{\"initialCapital\":7500000,\"sellingPrice\":45000,\"manufacturingCost\":1800,\"packaging\":500,\"logistics\":750,\"employeeExpenses\":650000,\"rent\":120000,\"marketing\":300000,\"technology\":80000,\"compliance\":100000,\"otherExpenses\":100000,\"monthlySales\":150}",
+    "kind": "startup"
+  },
+  {
+    "id": "s-team-0",
+    "title": "Saved Team",
+    "content": "[{\"id\":\"fbb5d02d-d95f-4ef1-97e7-bf81bcdb5bc1\",\"role\":\"CEO\",\"salary\":0,\"hiringStage\":\"Now\",\"notes\":\"Demo monthly salary estimate.\"},{\"id\":\"4771cc9b-a203-4c53-bd9f-5ad4908efc25\",\"role\":\"Product / CTO\",\"salary\":120000,\"hiringStage\":\"Now\",\"notes\":\"Demo monthly salary estimate.\"},{\"id\":\"3812224b-a246-49cf-bf81-fcc5ef865bf2\",\"role\":\"Hardware engineer\",\"salary\":85000,\"hiringStage\":\"Prototype\",\"notes\":\"Demo monthly salary estimate.\"},{\"id\":\"2aa6c658-523f-4e8d-9994-1cce8a756a24\",\"role\":\"Quality engineer\",\"salary\":75000,\"hiringStage\":\"Prototype\",\"notes\":\"Demo monthly salary estimate.\"},{\"id\":\"de0fe826-f0af-4b0e-8cee-172d25f53512\",\"role\":\"Supply chain manager\",\"salary\":90000,\"hiringStage\":\"Prototype\",\"notes\":\"Demo monthly salary estimate.\"},{\"id\":\"8420e502-8313-4c32-be81-46d34ddd105e\",\"role\":\"Marketing lead\",\"salary\":90000,\"hiringStage\":\"Pre-launch\",\"notes\":\"Demo monthly salary estimate.\"},{\"id\":\"6747ec89-ddbb-402c-bf57-7a2b86b678f8\",\"role\":\"Customer support\",\"salary\":45000,\"hiringStage\":\"Launch\",\"notes\":\"Demo monthly salary estimate.\"}]",
+    "kind": "startup"
+  },
+  {
+    "id": "s-risks-0",
+    "title": "Saved Risks · Items 1–4 of 5",
+    "content": "[{\"id\":\"295259aa-7568-4ad2-a321-01c92694b7e0\",\"category\":\"Financial\",\"title\":\"Margin erosion from component volatility\",\"probability\":4,\"impact\":5,\"mitigation\":\"Dual-source key parts and maintain a costed change-control process.\",\"owner\":\"Founder\",\"status\":\"Open\"},{\"id\":\"9c987893-d484-45f4-97c6-d3a68bc666cd\",\"category\":\"Supply chain\",\"title\":\"Long lead-time components delay pilot\",\"probability\":4,\"impact\":4,\"mitigation\":\"Reserve allocation early and qualify alternates.\",\"owner\":\"Founder\",\"status\":\"Open\"},{\"id\":\"4f83f6a2-9158-4c20-aea0-a771de5383d3\",\"category\":\"Quality\",\"title\":\"Early field failures damage trust\",\"probability\":3,\"impact\":5,\"mitigation\":\"Run reliability validation and controlled pilot rollout.\",\"owner\":\"Founder\",\"status\":\"Open\"},{\"id\":\"8dda0e8d-1ac1-4f19-b37c-30ff5b7900c7\",\"category\":\"Market\",\"title\":\"Weak differentiation versus incumbents\",\"probability\":3,\"impact\":4,\"mitigation\":\"Validate student-specific proposition before tooling commitments.\",\"owner\":\"Founder\",\"status\":\"Open\"}]",
+    "kind": "startup"
+  },
+  {
+    "id": "s-risks-1",
+    "title": "Saved Risks · Item 5 of 5",
+    "content": "[{\"id\":\"9cc2bdcb-bb47-419a-bec8-3c2ab9643275\",\"category\":\"Regulatory\",\"title\":\"Missed certification changes launch date\",\"probability\":2,\"impact\":5,\"mitigation\":\"Build a certification matrix and engage a qualified lab early.\",\"owner\":\"Founder\",\"status\":\"Open\"}]",
+    "kind": "startup"
+  },
+  {
+    "id": "s-roadmap-0",
+    "title": "Saved Roadmap · Items 1–6 of 9",
+    "content": "[{\"id\":\"04c8b1a7-74d3-498b-b388-858debeb2a45\",\"name\":\"Idea validation\",\"timing\":\"Week 1–2\",\"description\":\"Interview students and test purchase intent.\",\"status\":\"Planned\"},{\"id\":\"9e44b9be-fe24-4903-ab8c-35094ce294b3\",\"name\":\"Market research\",\"timing\":\"Week 2–4\",\"description\":\"Size reachable segments and map alternatives.\",\"status\":\"Planned\"},{\"id\":\"39fc5c7d-6caa-49b8-9fad-fbffdc8b0c59\",\"name\":\"Product specification\",\"timing\":\"Week 3–6\",\"description\":\"Freeze MVP requirements and target cost.\",\"status\":\"Planned\"},{\"id\":\"fe661b6d-02c8-42e2-8d31-27fa0b3929a6\",\"name\":\"Prototype\",\"timing\":\"Month 2–4\",\"description\":\"Build and validate engineering samples.\",\"status\":\"Planned\"},{\"id\":\"06639ae6-a175-43a4-b464-f494e6dd059d\",\"name\":\"Supplier identification\",\"timing\":\"Month 3–5\",\"description\":\"Qualify primary and alternate suppliers.\",\"status\":\"Planned\"},{\"id\":\"4f56adfb-c851-4250-bc7e-dcc1e3a930be\",\"name\":\"Testing & certification\",\"timing\":\"Month 4–6\",\"description\":\"Complete reliability and applicable compliance work.\",\"status\":\"Planned\"}]",
+    "kind": "startup"
+  },
+  {
+    "id": "s-roadmap-1",
+    "title": "Saved Roadmap · Items 7–9 of 9",
+    "content": "[{\"id\":\"7d97a081-3f64-4b56-8692-9a7dbe1ba956\",\"name\":\"Pilot production\",\"timing\":\"Month 6–7\",\"description\":\"Run a controlled pilot and close defects.\",\"status\":\"Planned\"},{\"id\":\"beb981eb-5b2f-437a-8654-61a2d8418cb6\",\"name\":\"Launch\",\"timing\":\"Month 7–9\",\"description\":\"Launch online with selected campus partners.\",\"status\":\"Planned\"},{\"id\":\"dd493449-bd96-43bf-bb54-e2ed09d19a51\",\"name\":\"Scale\",\"timing\":\"Month 9+\",\"description\":\"Expand based on demand and support quality.\",\"status\":\"Planned\"}]",
+    "kind": "startup"
+  },
+  {
+    "id": "s-scaling-0",
+    "title": "Saved Scaling · Items 1–3 of 6",
+    "content": "[{\"id\":\"8f19502a-d5e5-4839-ab24-b9e8b955450c\",\"name\":\"Prototype\",\"productionCapacity\":\"10–500 units\",\"team\":\"Add specialists at the constraint\",\"capital\":\"Milestone-linked funding\",\"distribution\":\"Direct pilot\",\"technology\":\"Instrumentation and traceability\",\"risks\":\"Scaling ahead of demand or quality\",\"milestones\":\"Quality, margin, demand, and service gates\"},{\"id\":\"749968e3-2c06-4628-89de-69f02f25fd50\",\"name\":\"Small batch\",\"productionCapacity\":\"10–500 units\",\"team\":\"Add specialists at the constraint\",\"capital\":\"Milestone-linked funding\",\"distribution\":\"Direct pilot\",\"technology\":\"Instrumentation and traceability\",\"risks\":\"Scaling ahead of demand or quality\",\"milestones\":\"Quality, margin, demand, and service gates\"},{\"id\":\"a2542fb9-e490-4830-88f6-298517eb059d\",\"name\":\"Market launch\",\"productionCapacity\":\"Scale to validated demand\",\"team\":\"Add specialists at the constraint\",\"capital\":\"Milestone-linked funding\",\"distribution\":\"Expand channels deliberately\",\"technology\":\"Instrumentation and traceability\",\"risks\":\"Scaling ahead of demand or quality\",\"milestones\":\"Quality, margin, demand, and service gates\"}]",
+    "kind": "startup"
+  },
+  {
+    "id": "s-scaling-1",
+    "title": "Saved Scaling · Items 4–5 of 6",
+    "content": "[{\"id\":\"5644bba7-434e-4e72-8b84-502a38138cf3\",\"name\":\"Regional expansion\",\"productionCapacity\":\"Scale to validated demand\",\"team\":\"Add specialists at the constraint\",\"capital\":\"Milestone-linked funding\",\"distribution\":\"Expand channels deliberately\",\"technology\":\"Instrumentation and traceability\",\"risks\":\"Scaling ahead of demand or quality\",\"milestones\":\"Quality, margin, demand, and service gates\"},{\"id\":\"6405a651-f08f-4d4d-aebe-494855a85609\",\"name\":\"National expansion\",\"productionCapacity\":\"Scale to validated demand\",\"team\":\"Add specialists at the constraint\",\"capital\":\"Milestone-linked funding\",\"distribution\":\"Expand channels deliberately\",\"technology\":\"Instrumentation and traceability\",\"risks\":\"Scaling ahead of demand or quality\",\"milestones\":\"Quality, margin, demand, and service gates\"}]",
+    "kind": "startup"
+  },
+  {
+    "id": "s-scaling-2",
+    "title": "Saved Scaling · Item 6 of 6",
+    "content": "[{\"id\":\"41503702-c8bd-4b6d-b2cd-3b6665b0a0c6\",\"name\":\"International expansion\",\"productionCapacity\":\"Scale to validated demand\",\"team\":\"Add specialists at the constraint\",\"capital\":\"Milestone-linked funding\",\"distribution\":\"Expand channels deliberately\",\"technology\":\"Instrumentation and traceability\",\"risks\":\"Scaling ahead of demand or quality\",\"milestones\":\"Quality, margin, demand, and service gates\"}]",
+    "kind": "startup"
+  },
+  {
+    "id": "s-planningDraft-0",
+    "title": "Saved Planning Draft",
+    "content": "\"\"",
+    "kind": "startup"
+  }
+]
