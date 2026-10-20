@@ -104,17 +104,18 @@ readiness = sum(100 * sum(stage) / len(stage) for stage in checks) / len(checks)
 reported = {"bom": 31500, "unit_cost": 34550, "contribution": 10450, "margin": 23.22,
             "revenue": 6750000, "operating_profit": 217500, "break_even": 130,
             "capacity": 1659, "readiness": 78}
+as_is = calculate_finance(financial["packaging"])
 fixed = calculate_finance(0)  # Packaging is already a BOM line; remove its second charge.
 rows = [
-    ("BOM cost per unit (INR)", reported["bom"], bom, False),
-    ("Unit cost U (INR)", reported["unit_cost"], fixed["unit_cost"], False),
-    ("Contribution π (INR)", reported["contribution"], fixed["contribution"], False),
-    ("Gross margin g", reported["margin"], fixed["margin"], True),
-    ("Revenue R (INR/month)", reported["revenue"], fixed["revenue"], False),
-    ("Operating profit (INR/month)", reported["operating_profit"], fixed["operating_profit"], False),
-    ("Break-even (units/month)", reported["break_even"], fixed["break_even"], False),
-    ("Realistic capacity (units/month)", reported["capacity"], round(realistic), False),
-    ("Overall readiness ρ", reported["readiness"], round(readiness), True),
+    ("BOM cost per unit (INR)", reported["bom"], bom, bom, False),
+    ("Unit cost U (INR)", reported["unit_cost"], as_is["unit_cost"], fixed["unit_cost"], False),
+    ("Contribution π (INR)", reported["contribution"], as_is["contribution"], fixed["contribution"], False),
+    ("Gross margin g", reported["margin"], as_is["margin"], fixed["margin"], True),
+    ("Revenue R (INR/month)", reported["revenue"], as_is["revenue"], fixed["revenue"], False),
+    ("Operating profit (INR/month)", reported["operating_profit"], as_is["operating_profit"], fixed["operating_profit"], False),
+    ("Break-even (units/month)", reported["break_even"], as_is["break_even"], fixed["break_even"], False),
+    ("Realistic capacity (units/month)", reported["capacity"], round(realistic), round(realistic), False),
+    ("Overall readiness ρ", reported["readiness"], round(readiness), round(readiness), True),
 ]
 
 print(f"Read {len(bom_rows)} BOM lines from {DEMO.relative_to(ROOT)}.")
@@ -123,8 +124,15 @@ print("Recomputed values remove only this second INR 500 packaging charge.")
 print(f"Inferred fixture inputs: Q={financial['monthlySales']}; X={fixed['expenses']:,} INR/month.")
 print(f"Capacity: theoretical={theoretical:,}; utilization={manufacturing['utilization']}%; exact realistic={realistic:.2f}.")
 print(f"Readiness: nine journey stages; exact mean={readiness:.2f}% (whole-percent display).\n")
-print(f"{'Indicator':38} {'Reported in paper':>18} {'Recomputed':>14}  Status")
-print("-" * 88)
-for label, expected, actual, is_percent in rows:
-    match = round(float(expected), 2) == round(float(actual), 2)
-    print(f"{label:38} {display(expected, is_percent):>18} {display(actual, is_percent):>14}  {'PASS' if match else 'MISMATCH'}")
+print(f"{'Indicator':34} {'Reported in paper':>18} {'As-is app':>14} {'D1 corrected':>14}  Status")
+print("-" * 118)
+for label, expected, as_is_value, corrected, is_percent in rows:
+    paper_match = round(float(expected), 2) == round(float(as_is_value), 2)
+    correction_changed = round(float(as_is_value), 2) != round(float(corrected), 2)
+    if paper_match and correction_changed:
+        status = "as-is matches paper; differs from paper only by D1"
+    elif paper_match:
+        status = "as-is matches paper"
+    else:
+        status = "OTHER DIFFERENCE: as-is app does not match paper"
+    print(f"{label:34} {display(expected, is_percent):>18} {display(as_is_value, is_percent):>14} {display(corrected, is_percent):>14}  {status}")
