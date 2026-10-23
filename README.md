@@ -377,8 +377,6 @@ weights. They exercise persistence, scope isolation, incremental replacement, er
 handling, independent agent contexts and reviewer handoffs. Firebase-authenticated
 end-to-end testing requires installed models and a signed-in
 workspace. Model output quality requires separate evaluation with representative cases.
-A local in-memory smoke run with real `nomic-embed-text` and `qwen3:8b` completed a
-Product-agent → Reviewer handoff and correctly reported missing supplier evidence.
 
 ## Reproducing the paper
 
@@ -420,14 +418,18 @@ document index is built once before timed runs and excluded from its latency; qu
 embedding and retrieval are timed. Full-pipeline timing includes the application
 index synchronization, retrieval, specialist calls, reviewer, and guardrails.
 
-Version map: commit `7231d3a` is the system described in paper Sections 3–7 and the
-code audit; tag `eval-frozen-final` identifies the frozen questions; repository HEAD
-is the revision evaluated. The original 14 October 2026 evaluation files were lost,
-so this evaluation was rebuilt and rerun; its numbers therefore differ from earlier
-drafts. Results are a small local-model evaluation on the illustrative NovaEdge
-venture, rule checks are not semantic correctness, latency is hardware- and
-load-dependent, and four recorded full-pipeline runs timed out rather than being
-silently replaced.
+Version map: commit `7231d3a` is the system described in paper Sections 3–7 and
+the code audit. Commit `5f23d89` is the application revision evaluated in paper
+Section 8.5; later commits add only documentation and evaluation files. Tag
+`eval-frozen-final` identifies the frozen questions, `eval-runner-ready` the
+scoring code and environment record, and `eval-results-raw` the raw results of
+all 216 runs. Features described elsewhere in this README that were added after
+`5f23d89` are not part of the evaluated system. The original 14 October 2026
+evaluation files were lost, so this evaluation was rebuilt and rerun; its numbers
+therefore differ from earlier drafts. Results are a small local-model evaluation
+on the illustrative NovaEdge venture, rule checks are not semantic correctness,
+latency is hardware- and load-dependent, and four recorded full-pipeline runs
+timed out rather than being silently replaced.
 
 All code was written jointly by Aniket Raj, Ankit Raj, and Ansh Aryan. Commits were
 pushed from the `ansharyan007` account. `TECHNICAL_ANALYSIS.md` is a dated analysis
